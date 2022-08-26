@@ -5,6 +5,10 @@ session_start();
 if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
+    if (!isset($_GET['cat_update'])) {header("location:dashbord.php");}
+        else{
+            
+        
 ?>
 <!DOCTYPE html>
 <html>
@@ -160,4 +164,6 @@ if (!isset($_SESSION['logedin'])) {
 
 </html>
 
-<?php } ?>
+<?php }
+
+} ?>

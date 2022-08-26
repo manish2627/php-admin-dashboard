@@ -1,5 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['logedin'])) {
+    header("location:login.php");
+} else {
+?>
+
+
 <!DOCTYPE html>
-<?= session_start()?>
+
 <html>
 
 <head>
@@ -266,3 +274,5 @@
 </body>
 
 </html>
+
+<?php } ?>

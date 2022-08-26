@@ -48,7 +48,7 @@ if (!isset($_SESSION['logedin'])) {
         $update_id = $_GET["cat_update_id"];
         $update_name = $_GET["cat_update_name"];
         $update_slug = $_GET["cat_update_slug"];
-        if (!empty($_GET['cat_udate_status'])) {
+        if (!empty($_GET['cat_update_status'])) {
             $update_status = 1;
         } else {
             $update_status = 0;
@@ -66,16 +66,12 @@ if (!isset($_SESSION['logedin'])) {
 
 
     //Get catgory details
-    
     $result = mysqli_query($conn, "select * from category_table");
-    
-    
+
     $category_data = [];
     while ($data =  mysqli_fetch_assoc($result)) {
         $category_data[] = $data;
     }
-    echo "<pre>";
-    print_r($category_data);
 
 
 ?>
@@ -195,7 +191,8 @@ if (!isset($_SESSION['logedin'])) {
                     </nav>
                     <div class="container-fluid">
                         <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                            <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+                            <h3 class="text-dark mb-0">Dashboard</h3>
+                            <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a> -->
                         </div>
                         
                       
@@ -235,8 +232,7 @@ if (!isset($_SESSION['logedin'])) {
                                     <tbody>
                                         <?php $i = 0;
                                         foreach ($category_data as $data) {
-                                            $i += 1 ;
-                                            $temp_update_id=$data['id']?>
+                                            $i += 1 ?>
                                             <tr>
 
                                                 <td class="counterCell"><?= $i ?></td>
@@ -248,10 +244,12 @@ if (!isset($_SESSION['logedin'])) {
                                                 
                                                 <td ><div class="row">
                                                     <!-- Button trigger modal for update form-->
-                                                    
-                                                        <button class="btn-sm btn-primary" type="button" name="cat_update_id<?=$i;?>"   data-toggle="modal" data-target="#cat_update_Modal"> edit</button>
-                                                        <?php if(isset($_GET['cat_update_id'.$i])){ $temp_update_id=$category_data[$i-1]['id']; $temp_update_name=$category_data[$i-1]['category_name']; $temp_update_slug=$category_data[$i-1]['category_slug'];} ?>
-                                                    
+                                                    <form  id="form" action="update.php" method="GET">
+                                                        <input type="hidden" name="cat_update_id" value="<?php echo $data['id']; ?>">
+                                                        <input type="hidden" name="cat_update_name" value="<?php echo $data['category_name']; ?>">
+                                                        <input type="hidden" name="cat_update_slug" value="<?php echo $data['category_slug']; ?>">
+                                                        <button type="submit" class="btn-sm btn-primary " name="cat_update"   data-toggle="modal" data-target="#cat_update_Modal"> edit</button>
+                                                    </form>
                                                     <form action="" method="POST">
                                                         <input type="hidden" name="cat_delete" value="<?= $data['id']; ?>">
                                                         <button type="submit" class="btn-sm btn-primary mx-1" name='form_submit'>Delete</button>
@@ -264,7 +262,6 @@ if (!isset($_SESSION['logedin'])) {
                                     </tbody>
                                    
                                 </table>
-                               
                                 <!-- new category add form start here  -->
       
 
@@ -290,7 +287,7 @@ if (!isset($_SESSION['logedin'])) {
                 </div>
                 <div class="form-group form-check">
                   <input type="checkbox" class="form-check-input" id="exampleCheck1" name="cat_status">
-                  <label class="form-check-label" for="exampleCheck1">check it for activate</label>
+                  <label class="form-check-label" for="exampleCheck1">Check me if category status is true</label>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -301,48 +298,7 @@ if (!isset($_SESSION['logedin'])) {
         </div>
       </div>
       <!-- new category add form end  here  -->
-                                
-      <!-- update form modal start here  -->
-      
 
-      <!-- Modal -->
-      <div class="modal fade" id="cat_update_Modal" tabindex="-1" aria-labelledby="cat_update_ModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="cat_update_ModalLabel">update your category here </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="" method="GET">
-                <div class="form-group">
-                  
-                  <input type="text" name="cat_update_id" class="form-control" id="exampleInputEmail1" value="<?= $temp_update_id;?>">
-                </div>
-                <div class="form-group">
-                  <label for="category_name">category name</label>
-                  <input type="text" name="cat_update_name" class="form-control" id="exampleInputEmail1" value="<?= $temp_update_name;?>">
-                </div>
-                <div class="form-group">
-                  <label for="category_slug">category slug</label>
-                  <input type="text" name="cat_update_slug" class="form-control" id="exampleInputEmail1" value="<?= $temp_update_slug;?>">
-                </div>
-                <div class="form-group form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" name="cat_update_status">
-                  <label class="form-check-label" for="exampleCheck1">Check to activate </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary" name="update">Submit</button>
-              </form>
-              
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      <!-- update form modal end here  -->
                             </div>
                             <!-- <div class="row">
                                 <div class="col-md-6 align-self-center">

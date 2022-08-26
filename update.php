@@ -1,10 +1,9 @@
-
-
 <?php
 session_start();
 if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
+    // check edit request 
     if (!isset($_GET['cat_update'])) {header("location:dashbord.php");}
         else{
             

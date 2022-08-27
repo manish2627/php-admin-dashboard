@@ -67,7 +67,13 @@ if (!isset($_SESSION['logedin'])) {
 
     //Get catgory details
     $result = mysqli_query($conn, "select * from category_table");
-
+    $user_query = mysqli_query($conn, "SELECT * FROM USERS ");
+    
+    $users = [];
+    while ($user =  mysqli_fetch_assoc($user_query)) {
+        $users[] = $user;
+    }
+    
     $category_data = [];
     while ($data =  mysqli_fetch_assoc($result)) {
         $category_data[] = $data;
@@ -224,6 +230,7 @@ if (!isset($_SESSION['logedin'])) {
                                             <th scope="col">Category Slug</th>
                                             <th scope="col">Created on</th>
                                             <th scope="col">Updated on</th>
+                                            <th scope="col">created by</th>
                                             <th scope="col">Status</th>
                                             <!-- <th scope="col">User Id</th> -->
                                             <th scope="col">Action</th>
@@ -240,6 +247,7 @@ if (!isset($_SESSION['logedin'])) {
                                                 <td><?php echo $data['category_slug']; ?></td>
                                                 <td><?php echo $data['created_on']; ?></td>
                                                 <td><?php echo $data['updated_on']; ?></td>
+                                                <td><?php foreach($users as $user){if($user['user']==$data['user_id']){echo $user['first name'];}}?></td>
                                                 <td><?php if($data['status']==1){echo "active";}else{echo "deactive";} ?></td>
                                                 
                                                 <td ><div class="row">

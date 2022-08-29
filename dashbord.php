@@ -6,19 +6,21 @@ if (!isset($_SESSION['logedin'])) {
     // print_r($_SESSION['user_data']);
     // echo date('m/d/Y h:i:s ', time());
 
-
+    
     include 'db.config.php';
+    
+
 
     // delete a category 
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id  = $_POST['cat_delete'];
         $delete_query = "DELETE FROM `category_table` WHERE id='$id'";
         mysqli_query($conn, $delete_query);
+        
     }
 
     //add new catagory 
-
+    if(isset($_GET['add_new_category'])){
     if (empty($_GET['cat_status'])) {
         $status = 0;
     } else {
@@ -27,19 +29,21 @@ if (!isset($_SESSION['logedin'])) {
 
 
     if (!empty($_GET['cat_name'])) {
-        $cat_name = $_GET['cat_name'];
-        $user_id = $_SESSION['user_data']['user'];
+            $cat_name = $_GET['cat_name'];
+            $user_id = $_SESSION['user_data']['user'];
 
-        // if condition if slug value is not defined
+            // if condition if slug value is not defined
 
-        if (empty($_GET['cat_slug'])) {
-            $cat_slug = str_replace(' ', '_', $cat_name);
-        } else {
-            $cat_slug = $_GET['cat_slug'];
+            if (empty($_GET['cat_slug'])) {
+                $cat_slug = str_replace(' ', '_', $cat_name);
+            } else {
+                $cat_slug = $_GET['cat_slug'];
+            }
+
+            $add_query = "INSERT INTO `category_table` ( `category_name`, `category_slug`,`status`,`user_id`) VALUES ('$cat_name','$cat_slug','$status','$user_id')";
+            mysqli_query($conn, $add_query);
+            
         }
-
-        $add_query = "INSERT INTO `category_table` ( `category_name`, `category_slug`,`status`,`user_id`) VALUES ('$cat_name','$cat_slug','$status','$user_id')";
-        mysqli_query($conn, $add_query);
     }
 
 
@@ -59,6 +63,7 @@ if (!isset($_SESSION['logedin'])) {
         // echo $update_id,$update_name,$update_slug,$update_status,$update_time,$update_user_id;
         $update_query = " UPDATE `category_table` SET `category_name`='$update_name',`category_slug`='$update_slug',`status`='$update_status',`updated_on`=CURRENT_TIMESTAMP(),`user_id`='$update_user_id' WHERE id = '$update_id'";
         mysqli_query($conn, $update_query);
+      
     }
 
 
@@ -99,6 +104,8 @@ if (!isset($_SESSION['logedin'])) {
     </head>
 
     <body id="page-top">
+   
+   
         <div id="wrapper">
             <?php include 'nav.php' ?>
             <div class="d-flex flex-column" id="content-wrapper">
@@ -224,7 +231,13 @@ if (!isset($_SESSION['logedin'])) {
                                         </div>
                                         <div class="col-md-6">
                                             
-                                            <div class="text-md-right dataTables_filter" id="dataTable_filter"><label> <form method="" action="search.php"><input name="search_input" type="search" ><button class="btn-sm btn-primary mx-1" type="submit" name="search_btn" >search</button></form></label></div><?if(isset($_GET['search_btn']) && !empty($_GET['search_input'])){ header("location:search.php");};?>
+                                            <div class="text-md-right dataTables_filter" id="dataTable_filter"><label>
+                                                 <form method="" action="search.php">
+                                                    <input name="search_input" type="search" >
+                                                    <button class="btn-sm btn-primary mx-1" type="submit" name="search_btn" >search</button>
+                                                </form></label>
+                                            </div>
+                                            <?if(isset($_GET['search_btn']) && !empty($_GET['search_input'])){ header("location:search.php");};?>
                                         </div>
                                     </div>
                                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -314,7 +327,7 @@ if (!isset($_SESSION['logedin'])) {
                                                                 <label class="form-check-label" for="exampleCheck1">Check me if category status is true</label>
                                                             </div>
 
-                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" name="add_new_category">Submit</button>
                                                         </form>
                                                     </div>
 

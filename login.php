@@ -79,7 +79,7 @@ if (isset($_SESSION['logedin'])) {
                                         <div class="form-group">
                                            
                                         </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
-                                        <hr><a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook</a>
+                                        <!-- <hr><a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook</a> -->
                                         <hr>
                                     </form>
                                     <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>

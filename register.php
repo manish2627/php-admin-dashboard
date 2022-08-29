@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" placeholder="Password" id="pass1" name="pass1"><span class="error"> <h6><?php echo $errpass; ?></h6></span></div>
                                     <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="pass2" name="pass2" placeholder="Repeat Password"><span class="error"> <h6><?php echo $errpass; ?></h6></span></div>
                                 </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Register Account</button>
-                                <hr><a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i class="fab fa-google"></i>&nbsp; Register with Google</a><a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Register with Facebook</a>
+                                <!-- <hr><a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i class="fab fa-google"></i>&nbsp; Register with Google</a><a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Register with Facebook</a> -->
                                 <hr>
                             </form>
                             <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>

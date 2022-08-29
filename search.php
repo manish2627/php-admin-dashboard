@@ -19,8 +19,7 @@ if (!isset($_SESSION['logedin'])) {
             $search = $_GET['search_input'];
             $search_result = mysqli_query(
                 $conn,
-                " SELECT * FROM `category_table` WHERE category_name like '%" . $search . "%' OR category_slug LIKE '%" . $search . "%'"
-            );
+                " SELECT * FROM `category_table` WHERE category_name like '%" . $search . "%' OR category_slug LIKE '%" . $search . "%'");
             $search_data = [];
             while ($data =  mysqli_fetch_assoc($search_result)) {
                 $search_data[] = $data;
@@ -158,7 +157,7 @@ if (!isset($_SESSION['logedin'])) {
                                 <div class="card shadow">
                                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                                         <?php if ($search_count <= 0) {
-                                            echo "nothing here ";
+                                            echo "we didn't find anymatch with your search.....!!! ";
                                         } else { ?>
                                             <table class="table my-0" id="dataTable">
                                                 <thead>
@@ -186,16 +185,8 @@ if (!isset($_SESSION['logedin'])) {
                                                             <td><?php echo $data['category_slug']; ?></td>
                                                             <td><?php echo $data['created_on']; ?></td>
                                                             <td><?php echo $data['updated_on']; ?></td>
-                                                            <td><?php foreach ($users as $user) {
-                                                                    if ($user['user'] == $data['user_id']) {
-                                                                        echo $user['first name'];
-                                                                    }
-                                                                } ?></td>
-                                                            <td><?php if ($data['status'] == 1) {
-                                                                    echo "active";
-                                                                } else {
-                                                                    echo "deactive";
-                                                                } ?></td>
+                                                            <td><?php foreach ($users as $user) { if ($user['user'] == $data['user_id']) {echo $user['first name']; } } ?></td>
+                                                            <td><?php if ($data['status'] == 1) { echo "active"; } else { echo "deactive"; } ?></td>
 
                                                             <td>
                                                                 <div class="row">

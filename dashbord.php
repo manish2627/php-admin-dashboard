@@ -79,6 +79,10 @@ if (!isset($_SESSION['logedin'])) {
         $category_data[] = $data;
     }
 
+    // search 
+
+
+
 
 ?>
 
@@ -219,7 +223,8 @@ if (!isset($_SESSION['logedin'])) {
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                            
+                                            <div class="text-md-right dataTables_filter" id="dataTable_filter"><label> <form method="" action="search.php"><input name="search_input" type="search" ><button class="btn-sm btn-primary mx-1" type="submit" name="search_btn" >search</button></form></label></div><?if(isset($_GET['search_btn']) && !empty($_GET['search_input'])){ header("location:search.php");};?>
                                         </div>
                                     </div>
                                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">

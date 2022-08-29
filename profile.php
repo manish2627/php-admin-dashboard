@@ -268,9 +268,7 @@ if (!isset($_SESSION['logedin'])) {
                                                         <div class="col">
                                                             <div class="form-group"><label for="date_of_birth"><strong>Dob</strong></label><input class="form-control" type="date" id="dob" name="dob" value="<?= $_SESSION['user_data']['dob']; ?>"></div>
                                                         </div>
-                                                    </div>
-                                                    <!-- <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div> -->
-                                                    
+                                                    </div>                                                    
                                                     <div class="form-group"><label for="address"><strong>Address</strong></label><input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address"></div>
                                                     <div class="form-row">
                                                         <div class="col">

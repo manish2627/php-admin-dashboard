@@ -4,24 +4,42 @@ session_start();
 if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
+ 
+    // function to update the user profile picture
+    function uploadImage()
+    {
+        $filename = $_FILES['profile_pic']['name'];
+        $tempname = $_FILES['profile_pic']['tmp_name'];
+        $folder = "assets/img/profile/" . $filename;
+        move_uploaded_file($tempname, $folder);
 
-function uploadImage(){
-    $filename= $_FILES['profile_pic']['name'];
-    $tempname= $_FILES['profile_pic']['tmp_name'];
-    $folder = "assets/img/profile/".$filename;
-    move_uploaded_file($tempname,$folder);
+        include 'db.config.php';
+        $user_id = $_SESSION['user_data']['user'];
+        mysqli_query($conn, "UPDATE `users` SET `profile_pic`='$filename' WHERE `user`='$user_id' ");
+    }
 
-    include 'db.config.php';
-    $user_id = $_SESSION['user_data']['user'];
-    mysqli_query($conn,"UPDATE `users` SET `profile_pic`='$filename' WHERE `user`='$user_id' ");
-}
-if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
-   
-    uploadImage();
-  
+    // function to update the user profile details 
+     function updateDetails(){
+        $email=$_POST['email'];
+        $first_name =$_POST['first_name'];
+        $last_name=$_POST['last_name'];
+        $phone=$_POST['phone'];
+        $dob=$_POST['dob'];
+        echo $email,$first_name,$last_name,$phone,$dob;
+        include 'db.config.php';
+        $user_id = $_SESSION['user_data']['user'];
+        mysqli_query($conn, "UPDATE `users` SET `first name`='$first_name',`last name`='$last_name',`email`='$email',`dob`='$dob',`phone`='$phone' WHERE `user` ='$user_id' ");
+        
+
+    }
 
 
-}
+    if (isset($_POST['change_photo'])&& isset($_FILES['profile_pic'])){
+        uploadImage();
+        }
+    if (isset($_POST['save_change'])){
+        updateDetails();
+        }
 
 ?>
 
@@ -131,7 +149,7 @@ if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
                                 </li>
                                 <div class="d-none d-sm-block topbar-divider"></div>
                                 <li class="nav-item dropdown no-arrow">
-                                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?= $_SESSION['user_data']['first name']; ?></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
+                                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?= $_SESSION['user_data']['first name']; ?></span><img class="border rounded-circle img-profile" src="assets/img/profile/<?= $_SESSION['user_data']['profile_pic'] ?>"></a>
                                         <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
                                             <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
                                         </div>
@@ -145,20 +163,22 @@ if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
                         <div class="row mb-3">
                             <div class="col-lg-4">
                                 <div class="card mb-3">
-                                    <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/profile/<?= $_SESSION['user_data']['profile_pic']?>" width="160" height="160">
+                                    <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/profile/<?= $_SESSION['user_data']['profile_pic'] ?>" width="160" height="160">
                                         <div class="mb-3">
                                             <form action="" method="POST" enctype="multipart/form-data">
-                                                <input align="middle" type="file" name="profile_pic">
+                                                <input  type="file" name="profile_pic">
                                                 <!-- <button type="submit" name='submit'>submit</button> -->
 
-                                                <button class="btn btn-primary btn-sm" type="submit" name="submit">Change Photo</button>
-                                        
-                                        </form>
-                                            </div>
+                                                <button class="btn btn-primary btn-sm" type="submit" name="change_photo">Change Photo</button>
+
+                                            </form>
+                                          
+
+                                        </div>
 
                                     </div>
                                 </div>
-                                <div class="card shadow mb-4">
+                                <!-- <div class="card shadow mb-4">
                                     <div class="card-header py-3">
                                         <h6 class="text-primary font-weight-bold m-0">Projects</h6>
                                     </div>
@@ -184,7 +204,7 @@ if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
                                             <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="sr-only">100%</span></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-lg-8">
                                 <div class="row mb-3 d-none">
@@ -224,7 +244,7 @@ if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
                                                 <p class="text-primary m-0 font-weight-bold">User Settings</p>
                                             </div>
                                             <div class="card-body">
-                                                <form>
+                                                <form method="POST" action="" >
                                                     <div class="form-row">
                                                         <div class="col">
                                                             <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="user.name" name="username" value="<?= $_SESSION['user_data']['email']; ?>"></div>
@@ -241,16 +261,16 @@ if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
                                                             <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name" value="<?= $_SESSION['user_data']['last name']; ?>"></div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="card shadow">
-                                            <div class="card-header py-3">
-                                                <p class="text-primary m-0 font-weight-bold">Contact Settings</p>
-                                            </div>
-                                            <div class="card-body">
-                                                <form>
+                                                    <div class="form-row">
+                                                        <div class="col">
+                                                            <div class="form-group"><label for="phone"><strong>Phone</strong></label><input class="form-control" type="tel" id="phone" name="phone" value="<?= $_SESSION['user_data']['phone']; ?>"></div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group"><label for="date_of_birth"><strong>Dob</strong></label><input class="form-control" type="date" id="dob" name="dob" value="<?= $_SESSION['user_data']['dob']; ?>"></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div> -->
+                                                    
                                                     <div class="form-group"><label for="address"><strong>Address</strong></label><input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address"></div>
                                                     <div class="form-row">
                                                         <div class="col">
@@ -260,15 +280,16 @@ if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
                                                             <div class="form-group"><label for="country"><strong>Country</strong></label><input class="form-control" type="text" id="country" placeholder="USA" name="country"></div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save&nbsp;Settings</button></div>
+                                                    <div class="form-group"><button class="btn btn-primary btn-sm" type="submit" name="save_change">Save Changes</button></div>
                                                 </form>
                                             </div>
                                         </div>
+                                       
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card shadow mb-5">
+                        <!-- <div class="card shadow mb-5">
                             <div class="card-header py-3">
                                 <p class="text-primary m-0 font-weight-bold">Forum Settings</p>
                             </div>
@@ -285,7 +306,7 @@ if (isset($_POST['submit'])&& isset($_FILES['profile_pic'])){
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <footer class="bg-white sticky-footer">

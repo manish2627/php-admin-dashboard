@@ -74,12 +74,6 @@ if (!isset($_SESSION['logedin'])) {
     $messages = array_reverse($messages);
 
     
-   
-
-
-
-
-
     //Get catgory details
     $result = mysqli_query($conn, "select * from category_table");
     $user_query = mysqli_query($conn, "SELECT * FROM USERS ");
@@ -93,12 +87,6 @@ if (!isset($_SESSION['logedin'])) {
     while ($data =  mysqli_fetch_assoc($result)) {
         $category_data[] = $data;
     }
-
-
-
-
-
-
 ?>
 
     <!DOCTYPE html>

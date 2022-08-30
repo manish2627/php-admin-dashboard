@@ -7,12 +7,16 @@ if (!isset($_SESSION['logedin'])) {
     if (!isset($_GET['search_btn'])) {
         header("location:dashbord.php");
     } else {
+        
         include 'db.config.php';
         $user_query = mysqli_query($conn, "SELECT * FROM USERS ");
         $users = [];
         while ($user =  mysqli_fetch_assoc($user_query)) {
             $users[] = $user;
         }
+        
+        
+        // search query 
 
         if (isset($_GET['search_btn'])) {
 
@@ -26,15 +30,9 @@ if (!isset($_SESSION['logedin'])) {
             }
             $search_count = mysqli_num_rows($search_result);
         }
-
-
 ?>
-
-
         <!DOCTYPE html>
-
         <html>
-
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -43,7 +41,6 @@ if (!isset($_SESSION['logedin'])) {
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
             <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
         </head>
-
         <body id="page-top">
             <div id="wrapper">
                 <?php include 'nav.php' ?>
@@ -231,8 +228,6 @@ if (!isset($_SESSION['logedin'])) {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
             <script src="assets/js/theme.js"></script>
         </body>
-
         </html>
 
-<?php }
-} ?>
+<?php } } ?>

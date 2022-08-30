@@ -123,7 +123,7 @@ if (!isset($_SESSION['logedin'])) {
                     </div>
                 </nav>
                 <div class="container">
-                <form action="dashbord.php" method="GET">
+                <form action="dashbord.php" method="POST">
         <div class="form-group">
             <!-- <label for="category_id">category id</label> -->
             <input type="hidden" name="cat_update_id" class="form-control" id="exampleInputEmail1" value="<?= $_GET['cat_update_id'] ?>">

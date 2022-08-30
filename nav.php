@@ -8,6 +8,7 @@
                     <li class="nav-item"><a class="nav-link active" href="dashbord.php"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="table.php"><i class="fas fa-table"></i><span>Table</span></a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="contactus.php"><i class="fas fa-address-book"></i><span>Contact Us</span></a></li> -->
                     
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>

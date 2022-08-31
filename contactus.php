@@ -6,16 +6,12 @@ if (!isset($_SESSION['logedin'])) {
 } else {
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
-
-    include 'db.config.php';
     $msg_name = $_POST['msg_name'];
     $msg_email = $_POST['msg_email'];
     $msg_phone = $_POST['msg_phone'];
     $msg_message = $_POST['msg'];
-    $user_id = $_SESSION['user_data']['user'];
 
     echo $msg_email,$msg_message,$msg_name,$msg_phone;
-    mysqli_query($conn,"INSERT INTO `messages` ( `name`, `email`, `phone`, `massage`,`user_id`) VALUES ('$msg_name', '$msg_email', '$msg_phone', '$msg_message',  '$user_id');");
 }
    
 
@@ -28,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Contact Us</title>
+        <title>Profile - Brand</title>
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
         <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">

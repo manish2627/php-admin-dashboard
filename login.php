@@ -22,7 +22,8 @@ if (isset($_SESSION['logedin'])) {
     if ($count == 1) {
    
       $_SESSION['user_data']= $row;
-      $_SESSION['username'] = $row['first name'];
+      $_SESSION['username'] = $row['first_name'];
+      $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['logedin'] = TRUE;
       $_SESSION['msgalert'] = TRUE;
 
@@ -58,6 +59,7 @@ if (isset($_SESSION['logedin'])) {
         </button>
       </div>';
         }
+      
         ?>
     <div class="container">
         <div class="row justify-content-center">

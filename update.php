@@ -5,9 +5,15 @@ if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
     // check edit request 
-    if (!isset($_GET['cat_update'])) {
-        header("location:dashbord.php");
-    } else {
+    // if (!isset($_GET['cat_update'])) {
+    //     header("location:dashbord.php");
+    // } else {
+       
+        $query = "SELECT * FROM category_table where id =".$_GET['cat_update_id'];
+
+        $update_category =  mysqli_fetch_assoc( mysqli_query($conn, $query));
+
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // update the category details 
           
@@ -17,10 +23,10 @@ if (!isset($_SESSION['logedin'])) {
                 $update_status = $_POST["cat_update_status"];
                
                 $update_time = date('m/d/Y h:i:s ', time());
-                $update_user_id = $_SESSION['user_data']['user'];
+                
 
                 // echo $update_id,$update_name,$update_slug,$update_status,$update_time,$update_user_id;
-                $update_query = " UPDATE `category_table` SET `category_name`='$update_name',`category_slug`='$update_slug',`status`='$update_status',`updated_on`=CURRENT_TIMESTAMP(),`user_id`='$update_user_id' WHERE id = '$update_id'";
+                $update_query = " UPDATE `category_table` SET `category_name`='$update_name',`category_slug`='$update_slug',`status`='$update_status',`updated_on`=CURRENT_TIMESTAMP() WHERE id = '$update_id'";
                 mysqli_query($conn, $update_query);
                 header('location:dashbord.php');
             
@@ -55,11 +61,11 @@ if (!isset($_SESSION['logedin'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="category_name">category name</label>
-                                    <input type="text" name="cat_update_name" class="form-control" id="exampleInputEmail1" value="<?= $_GET['cat_update_name'] ?>">
+                                    <input type="text" name="cat_update_name" class="form-control" id="exampleInputEmail1" value="<?= $update_category['category_name'] ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="category_slug">category slug</label>
-                                    <input type="text" name="cat_update_slug" class="form-control" id="exampleInputEmail1" value="<?= $_GET['cat_update_slug'] ?>">
+                                    <input type="text" name="cat_update_slug" class="form-control" id="exampleInputEmail1"  value="<?= $update_category['category_slug'] ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="category_status">category status</label><br>
@@ -96,4 +102,4 @@ if (!isset($_SESSION['logedin'])) {
         </html>
 
 <?php }
-} ?>
+?>

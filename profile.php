@@ -4,19 +4,16 @@ session_start();
 if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
+    include "db.config.php";
+    $user_details_query = mysqli_query($conn, "SELECT * FROM users WHERE `user_id` = ".$_SESSION['user_id']);
+    $user_details = mysqli_fetch_assoc($user_details_query );
+   
  
     // function to update the user profile picture
-    function uploadImage()
-    {
-        $filename = $_FILES['profile_pic']['name'];
-        $tempname = $_FILES['profile_pic']['tmp_name'];
-        $folder = "assets/img/profile/" . $filename;
-        move_uploaded_file($tempname, $folder);
-
-        include 'db.config.php';
-        $user_id = $_SESSION['user_data']['user'];
-        mysqli_query($conn, "UPDATE `users` SET `profile_pic`='$filename' WHERE `user`='$user_id' ");
-    }
+    // function uploadImage()
+    // {
+       
+    // }
 
     // function to update the user profile details 
      function updateDetails(){
@@ -25,21 +22,32 @@ if (!isset($_SESSION['logedin'])) {
         $last_name=$_POST['last_name'];
         $phone=$_POST['phone'];
         $dob=$_POST['dob'];
-        echo $email,$first_name,$last_name,$phone,$dob;
+        // echo $email,$first_name,$last_name,$phone,$dob;
         include 'db.config.php';
-        $user_id = $_SESSION['user_data']['user'];
-        mysqli_query($conn, "UPDATE `users` SET `first name`='$first_name',`last name`='$last_name',`email`='$email',`dob`='$dob',`phone`='$phone' WHERE `user` ='$user_id' ");
+        $user_id = $user_details['user_id'];
+        mysqli_query($conn, "UPDATE `users` SET `first name`='$first_name',`last name`='$last_name',`email`='$email',`dob`='$dob',`phone`='$phone' WHERE `user_id` ='$user_id' ");
         
 
     }
 
 
     if (isset($_POST['change_photo'])&& isset($_FILES['profile_pic'])){
-        uploadImage();
+        $filename = $_FILES['profile_pic']['name'];
+        $tempname = $_FILES['profile_pic']['tmp_name'];
+        $folder = "assets/img/profile/" . $filename;
+        move_uploaded_file($tempname, $folder);
+
+        include 'db.config.php';
+        $user_id = $user_details['user_id'];
+        mysqli_query($conn, "UPDATE `users` SET `profile_pic`='$filename' WHERE `user_id`='$user_id' ");
+        header('location:profile.php');
         }
     if (isset($_POST['save_change'])){
         updateDetails();
         }
+    
+   
+
 
 ?>
 
@@ -68,7 +76,7 @@ if (!isset($_SESSION['logedin'])) {
                         <div class="row mb-3">
                             <div class="col-lg-4">
                                 <div class="card mb-3">
-                                    <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/profile/<?= $_SESSION['user_data']['profile_pic'] ?>" width="160" height="160">
+                                    <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/profile/<?= $user_details['profile_pic'] ?>" width="160" height="160">
                                         <div class="mb-3">
                                             <form action="" method="POST" enctype="multipart/form-data">
                                                 <input  type="file" name="profile_pic">
@@ -160,10 +168,10 @@ if (!isset($_SESSION['logedin'])) {
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="col">
-                                                            <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name" value="<?= $_SESSION['user_data']['first name']; ?>"></div>
+                                                            <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name" value="<?= $_SESSION['user_data']['first_name']; ?>"></div>
                                                         </div>
                                                         <div class="col">
-                                                            <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name" value="<?= $_SESSION['user_data']['last name']; ?>"></div>
+                                                            <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name" value="<?= $_SESSION['user_data']['last_name']; ?>"></div>
                                                         </div>
                                                     </div>
                                                     <div class="form-row">

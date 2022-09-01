@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                         <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                             <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -44,38 +46,63 @@
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown no-arrow mx-1">
-                                    <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="badge badge-danger badge-counter"></span><i class="fas fa-envelope fa-fw"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-list animated--grow-in">
-                                            <h6 class="dropdown-header">messageses</h6>
-
-
-                                            <!-- messages aleart tamplate start here   -->
-
-                                            <?php $i = 0;
-                                            foreach ($messages as $message) {
-                                                $i++ ?>
-                                                <a class="dropdown-item d-flex align-items-center" href="message.php">
-                                                    <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                        <div class="bg-success status-indicator"></div>
-                                                    </div>
-                                                    <div class="font-weight-bold">
-                                                        <div class="text-truncate"><span><?= $message['massage'] ?></span></div>
-                                                        <p class="small text-gray-500 mb-0"><?= $message['name'] ?></p>
-                                                    </div>
-                                                </a>
-                                            <?php if ($i == 4) {
-                                                    break;
-                                                }
-                                            } ?>
-
-                                            <a class="dropdown-item text-center small text-gray-500" href="message.php">Show All Alerts</a>
-                                            <!-- messages aleart tamplate ends  here   -->
-
-
-                                        </div>
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="assets/img/profile/image3.jpeg" alt="...">
+                                        <div class="status-indicator bg-success"></div>
                                     </div>
-                                    <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
-                                </li>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            problem I've been having.</div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="assets/img/profile/image2.jpeg" alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                            would you like them sent to you?</div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="assets/img/profile/image3.jpeg" alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!</div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
                                 <div class="d-none d-sm-block topbar-divider"></div>
                                 <li class="nav-item dropdown no-arrow">
                                     <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?= $_SESSION['username'] ?></span><img class="border rounded-circle img-profile" src="assets/img/profile/<?= $profile_pic = mysqli_fetch_assoc($query = mysqli_query($conn, "SELECT profile_pic FROM users WHERE `user_id` = ".$_SESSION['user_id']))['profile_pic']; ?>"></a>

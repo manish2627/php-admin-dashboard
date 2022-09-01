@@ -26,8 +26,9 @@ if (isset($_SESSION['logedin'])) {
       $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['logedin'] = TRUE;
       $_SESSION['msgalert'] = TRUE;
+      $errmsg = "you are logded in ..!!";
 
-      header("location:dashbord.php");
+      // header("location:dashbord.php");
     } else {
       $errmsg = "invalid. please check your details ....!!";
     }
@@ -58,6 +59,7 @@ if (isset($_SESSION['logedin'])) {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
+      echo '<meta http-equiv="refresh" content="1;url=dashbord.php">';
         }
       
         ?>

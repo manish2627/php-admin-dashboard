@@ -34,10 +34,10 @@ if (!isset($_SESSION['logedin'])) {
 
 
         <div id="wrapper">
-            <?php include 'nav.php' ?>
+            <?php include 'sidenavbar.php' ?>
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
-
+                
                     <div class="container-fluid">
                         <div class="d-sm-flex justify-content-between align-items-center mb-4">
                             <h3 class="text-dark mb-0">messages</h3>

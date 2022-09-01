@@ -5,33 +5,13 @@ if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
     include "db.config.php";
-    $user_details_query = mysqli_query($conn, "SELECT * FROM users WHERE `user_id` = ".$_SESSION['user_id']);
-    $user_details = mysqli_fetch_assoc($user_details_query );
-   
- 
-    // function to update the user profile picture
-    // function uploadImage()
-    // {
-       
-    // }
-
-    // function to update the user profile details 
-     function updateDetails(){
-        $email=$_POST['email'];
-        $first_name =$_POST['first_name'];
-        $last_name=$_POST['last_name'];
-        $phone=$_POST['phone'];
-        $dob=$_POST['dob'];
-        // echo $email,$first_name,$last_name,$phone,$dob;
-        include 'db.config.php';
-        $user_id = $user_details['user_id'];
-        mysqli_query($conn, "UPDATE `users` SET `first name`='$first_name',`last name`='$last_name',`email`='$email',`dob`='$dob',`phone`='$phone' WHERE `user_id` ='$user_id' ");
-        
-
-    }
+    $update_msg = false;
+    $user_details_query = mysqli_query($conn, "SELECT * FROM users WHERE `user_id` = " . $_SESSION['user_id']);
+    $user_details = mysqli_fetch_assoc($user_details_query);
 
 
-    if (isset($_POST['change_photo'])&& isset($_FILES['profile_pic'])){
+    // update profile pic 
+    if (isset($_POST['change_photo']) && isset($_FILES['profile_pic'])) {
         $filename = $_FILES['profile_pic']['name'];
         $tempname = $_FILES['profile_pic']['tmp_name'];
         $folder = "assets/img/profile/" . $filename;
@@ -40,22 +20,29 @@ if (!isset($_SESSION['logedin'])) {
         include 'db.config.php';
         $user_id = $user_details['user_id'];
         mysqli_query($conn, "UPDATE `users` SET `profile_pic`='$filename' WHERE `user_id`='$user_id' ");
-        header('location:profile.php');
-        }
-    if (isset($_POST['save_change'])){
-        updateDetails();
-        }
-    
-   
+        $update_msg = "your profile picture updated ..!";
+       
+    }
 
+    //update user details here 
+
+    if (isset($_POST['save_change'])) {
+        $email = $_POST['email'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $phone = $_POST['phone'];
+        $dob = $_POST['dob'];
+
+        include 'db.config.php';
+        $user_id = $user_details['user_id'];
+        mysqli_query($conn, "UPDATE `users` SET `first_name`='$first_name',`last_name`='$last_name',`email`='$email',`dob`='$dob',`phone`='$phone' WHERE `user_id` ='$user_id' ");
+        $update_msg = "your details updated ..!";
+        // header('location:profile.php');
+    }
 
 ?>
-
-
     <!DOCTYPE html>
-
     <html>
-
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -64,31 +51,39 @@ if (!isset($_SESSION['logedin'])) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
         <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     </head>
-
     <body id="page-top">
         <div id="wrapper">
             <?php include 'sidenavbar.php' ?>
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
-                <?php include 'topnavbar.php' ?>
+                    <?php include 'topnavbar.php' ?>
                     <div class="container-fluid">
                         <h3 class="text-dark mb-4">Profile</h3>
+                        <?php if ($update_msg) {
+          echo '
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>message: </strong> ' . $update_msg . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
+      echo '<meta http-equiv="refresh" content="1;url=profile.php">';
+
+        } ?>
+        
+      
+       
                         <div class="row mb-3">
                             <div class="col-lg-4">
                                 <div class="card mb-3">
                                     <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/profile/<?= $user_details['profile_pic'] ?>" width="160" height="160">
                                         <div class="mb-3">
                                             <form action="" method="POST" enctype="multipart/form-data">
-                                                <input  type="file" name="profile_pic">
+                                                <input type="file" name="profile_pic">
                                                 <!-- <button type="submit" name='submit'>submit</button> -->
-
                                                 <button class="btn btn-primary btn-sm" type="submit" name="change_photo">Change Photo</button>
-
                                             </form>
-                                          
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <!-- <div class="card shadow mb-4">
@@ -157,32 +152,32 @@ if (!isset($_SESSION['logedin'])) {
                                                 <p class="text-primary m-0 font-weight-bold">User Settings</p>
                                             </div>
                                             <div class="card-body">
-                                                <form method="POST" action="" >
+                                                <form method="POST" action="">
                                                     <div class="form-row">
                                                         <div class="col">
-                                                            <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="user.name" name="username" value="<?= $_SESSION['user_data']['email']; ?>"></div>
+                                                            <div class="form-group"><label for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="user.name" name="username" value="<?= $user_details['email'] ?>"></div>
                                                         </div>
                                                         <div class="col">
-                                                            <div class="form-group"><label for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email" value="<?= $_SESSION['user_data']['email']; ?>"></div>
+                                                            <div class="form-group"><label for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email" value="<?= $user_details['email'] ?>"></div>
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="col">
-                                                            <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name" value="<?= $_SESSION['user_data']['first_name']; ?>"></div>
+                                                            <div class="form-group"><label for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name" value="<?= $user_details['first_name'] ?>"></div>
                                                         </div>
                                                         <div class="col">
-                                                            <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name" value="<?= $_SESSION['user_data']['last_name']; ?>"></div>
+                                                            <div class="form-group"><label for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name" value="<?= $user_details['last_name'] ?>"></div>
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="col">
-                                                            <div class="form-group"><label for="phone"><strong>Phone</strong></label><input class="form-control" type="tel" id="phone" name="phone" value="<?= $_SESSION['user_data']['phone']; ?>"></div>
+                                                            <div class="form-group"><label for="phone"><strong>Phone</strong></label><input class="form-control" type="tel" id="phone" name="phone" value="<?= $user_details['phone'] ?>"></div>
                                                         </div>
                                                         <div class="col">
-                                                            <div class="form-group"><label for="date_of_birth"><strong>Dob</strong></label><input class="form-control" type="date" id="dob" name="dob" value="<?= $_SESSION['user_data']['dob']; ?>"></div>
+                                                            <div class="form-group"><label for="date_of_birth"><strong>Dob</strong></label><input class="form-control" type="date" id="dob" name="dob" value="<?= $user_details['dob'] ?>"></div>
                                                         </div>
-                                                    </div>                                                    
-                                                    <div class="form-group"><label for="address"><strong>Address</strong></label><input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address"></div>
+                                                    </div>
+                                                    <!-- <div class="form-group"><label for="address"><strong>Address</strong></label><input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address"></div>
                                                     <div class="form-row">
                                                         <div class="col">
                                                             <div class="form-group"><label for="city"><strong>City</strong></label><input class="form-control" type="text" id="city" placeholder="Los Angeles" name="city"></div>
@@ -190,12 +185,12 @@ if (!isset($_SESSION['logedin'])) {
                                                         <div class="col">
                                                             <div class="form-group"><label for="country"><strong>Country</strong></label><input class="form-control" type="text" id="country" placeholder="USA" name="country"></div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="form-group"><button class="btn btn-primary btn-sm" type="submit" name="save_change">Save Changes</button></div>
                                                 </form>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </div>

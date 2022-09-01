@@ -8,7 +8,7 @@ if (!isset($_SESSION['logedin'])) {
     
             if (!empty($_POST['cat_name'])) {
                 $cat_name = $_POST['cat_name'];
-                $user_id = $_SESSION['user_data']['user_id'];
+                $user_name = $_SESSION['username'];
 
                 // if condition if slug value is not defined
 
@@ -18,7 +18,7 @@ if (!isset($_SESSION['logedin'])) {
                     $cat_slug = $_GET['cat_slug'];
                 }
                 include 'db.config.php';
-                $add_query = "INSERT INTO `category_table` ( `category_name`, `category_slug`,`user_id`) VALUES ('$cat_name','$cat_slug','$user_id')";
+                $add_query = "INSERT INTO `category_table` ( `category_name`, `category_slug`,`created_by`) VALUES ('$cat_name','$cat_slug','$user_name')";
                 mysqli_query($conn, $add_query);
 
                 header("location:dashbord.php");

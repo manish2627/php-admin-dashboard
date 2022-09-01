@@ -7,12 +7,12 @@ if (!isset($_SESSION['logedin'])) {
     include 'db.config.php';
 
     //  for contact us messages 
-    $messages = [];
-    $msg_query = mysqli_query($conn, "SELECT * FROM messages ");
-    while ($msg_result = mysqli_fetch_assoc($msg_query)) {
-        $messages[] = $msg_result;
-    }
-    $messages = array_reverse($messages);
+    // $messages = [];
+    // $msg_query = mysqli_query($conn, "SELECT * FROM messages ");
+    // while ($msg_result = mysqli_fetch_assoc($msg_query)) {
+    //     $messages[] = $msg_result;
+    // }
+    // $messages = array_reverse($messages);
 
 
     //Get catgory details
@@ -63,6 +63,7 @@ if (!isset($_SESSION['logedin'])) {
         </button>
       </div>';
         }
+       
         ?>
 
 
@@ -91,7 +92,7 @@ if (!isset($_SESSION['logedin'])) {
                                         <thead>
                                             <tr>
 
-                                                <th scope="col">Id</th>
+                                                <th scope="col">s.no</th>
                                                 <th scope="col">Category Name </th>
                                                 <th scope="col">Category Slug</th>
                                                 <th scope="col">Created on</th>
@@ -113,11 +114,8 @@ if (!isset($_SESSION['logedin'])) {
                                                     <td><?php echo $data['category_slug']; ?></td>
                                                     <td><?php echo $data['created_on']; ?></td>
                                                     <td><?php echo $data['updated_on']; ?></td>
-                                                    <td><?php foreach ($users as $user) {
-                                                            if ($user['user_id'] == $data['user_id']) {
-                                                                echo $user['first_name'];
-                                                            }
-                                                        } ?></td>
+                                                    <td><?php echo $data['created_by']; ?></td>
+                                                    
                                                     <td><?php if ($data['status'] == 1) {
                                                             echo "active";
                                                         } else {

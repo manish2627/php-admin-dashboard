@@ -78,7 +78,7 @@ if (isset($_SESSION['logedin'])) {
             $query =
                 "INSERT INTO `users` (`first_name`, `last_name`, `email`, `dob`, `phone`, `password`) VALUES ('$fname', '$lname', '$email', '$dob', '$phone', '$pass')";
             mysqli_query($conn, $query);
-            header("location:login.php");
+            // header("location:login.php");
         }
     }
 
@@ -105,6 +105,7 @@ if (isset($_SESSION['logedin'])) {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
+      echo '<meta http-equiv="refresh" content="1;url=login.php">';
         }
         ?>
         <div class="container">

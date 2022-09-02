@@ -5,6 +5,7 @@ if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
     include "db.config.php";
+    
     $update_msg = false;
     $user_details_query = mysqli_query($conn, "SELECT * FROM users WHERE `user_id` = " . $_SESSION['user_id']);
     $user_details = mysqli_fetch_assoc($user_details_query);
@@ -21,12 +22,12 @@ if (!isset($_SESSION['logedin'])) {
         $user_id = $user_details['user_id'];
         mysqli_query($conn, "UPDATE `users` SET `profile_pic`='$filename' WHERE `user_id`='$user_id' ");
         $update_msg = "your profile picture updated ..!";
-       
     }
 
     //update user details here 
 
     if (isset($_POST['save_change'])) {
+
         $email = $_POST['email'];
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
@@ -43,6 +44,7 @@ if (!isset($_SESSION['logedin'])) {
 ?>
     <!DOCTYPE html>
     <html>
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -51,6 +53,7 @@ if (!isset($_SESSION['logedin'])) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
         <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     </head>
+
     <body id="page-top">
         <div id="wrapper">
             <?php include 'sidenavbar.php' ?>
@@ -60,19 +63,17 @@ if (!isset($_SESSION['logedin'])) {
                     <div class="container-fluid">
                         <h3 class="text-dark mb-4">Profile</h3>
                         <?php if ($update_msg) {
-          echo '
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>message: </strong> ' . $update_msg . '
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>';
-      echo '<meta http-equiv="refresh" content="1;url=profile.php">';
+                            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>message: </strong> ' . $update_msg . '
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>';
+                            echo '<meta http-equiv="refresh" content="1;url=profile.php">';
+                        } ?>
 
-        } ?>
-        
-      
-       
+
+
                         <div class="row mb-3">
                             <div class="col-lg-4">
                                 <div class="card mb-3">

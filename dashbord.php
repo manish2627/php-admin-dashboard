@@ -63,10 +63,18 @@ if (!isset($_SESSION['logedin'])) {
         </button>
       </div>';
         }
+       if($_SESSION['crud_msg']) {
+            echo '
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
+    $_SESSION['crud_msg'] = false;
+        }
        
         ?>
-
-
         <div id="wrapper">
             <?php include 'sidenavbar.php' ?>
             <div class="d-flex flex-column" id="content-wrapper">
@@ -213,7 +221,7 @@ if (!isset($_SESSION['logedin'])) {
 
                         swal({
                                 title: "Are you sure?",
-                                text: "Once deleted, you will not be able to recover this imaginary file!",
+                                text: "Once deleted, you will not be able to recover this category..!",
                                 icon: "warning",
                                 buttons: true,
                                 dangerMode: true,

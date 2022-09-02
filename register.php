@@ -67,18 +67,21 @@ if (isset($_SESSION['logedin'])) {
 
         if ($pass1 != $pass2) {
             $errmsg = "your password does not match !!! please check !";
-        } elseif (empty($fname) or empty($pass1) or empty($email) or empty($dob) or empty($phone)) {
+        } 
+        elseif (empty($fname) or empty($pass1) or empty($email) or empty($dob) or empty($phone)) {
 
-            $errmsg = "please check the enter details are correct it  ";
-        } elseif ($emailindb) {
+            $errmsg = "please fill all requied entry..!";
+        }
+         elseif ($emailindb) {
             $errmsg = "allready have an account with this email. use another email account ..! ";
         } else {
             $pass = md5($pass1);
-            $errmsg = "your account has been created successfully ...!! ";
+            
             $query =
                 "INSERT INTO `users` (`first_name`, `last_name`, `email`, `dob`, `phone`, `password`) VALUES ('$fname', '$lname', '$email', '$dob', '$phone', '$pass')";
             mysqli_query($conn, $query);
-            // header("location:login.php");
+            $_SESSION['crud_msg'] = "your account has been created successfully ...!! login to countinue...";
+            header("location:login.php");
         }
     }
 
@@ -105,7 +108,7 @@ if (isset($_SESSION['logedin'])) {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
-      echo '<meta http-equiv="refresh" content="1;url=login.php">';
+    //   echo '<meta http-equiv="refresh" content="0.5;url=login.php">';
         }
         ?>
         <div class="container">

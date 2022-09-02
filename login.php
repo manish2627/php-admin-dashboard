@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+
 if (isset($_SESSION['logedin'])) {
   header("location:dashbord.php");
 } else {
@@ -21,14 +22,14 @@ if (isset($_SESSION['logedin'])) {
     
     if ($count == 1) {
    
-      $_SESSION['user_data']= $row;
+      // $_SESSION['user_data']= $row;
       $_SESSION['username'] = $row['first_name'];
       $_SESSION['user_id'] = $row['user_id'];
       $_SESSION['logedin'] = TRUE;
-      $_SESSION['msgalert'] = TRUE;
-      $errmsg = "you are logded in ..!!";
+      $_SESSION['crud_msg'] ="you are logded in ..!!";
+      
 
-      // header("location:dashbord.php");
+      header("location:dashbord.php");
     } else {
       $errmsg = "invalid. please check your details ....!!";
     }
@@ -59,8 +60,21 @@ if (isset($_SESSION['logedin'])) {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
-      echo '<meta http-equiv="refresh" content="1;url=dashbord.php">';
+      // echo '<meta http-equiv="refresh" content="0.5;url=dashbord.php">';
         }
+ if ($_SESSION['crud_msg']) {
+          echo '
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
+     
+      
+        
+        
+ }
       
         ?>
     <div class="container">

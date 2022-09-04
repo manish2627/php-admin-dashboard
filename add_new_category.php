@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'db.config.php';
 if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
@@ -13,7 +14,7 @@ if (!isset($_SESSION['logedin'])) {
                 // if condition if slug value is not defined
 
                 if (empty($_POST['cat_slug'])) {
-                    $cat_slug = str_replace(' ', '_', $cat_name);
+                    $cat_slug = str_replace(' ', '-', $cat_name);
                 } else {
                     $cat_slug = $_GET['cat_slug'];
                 }
@@ -33,20 +34,13 @@ if (!isset($_SESSION['logedin'])) {
     <html>
 
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Table - Brand</title>
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-        <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+        
+        <title>Add category</title>
+        
     </head>
 
     <body id="page-top">
-        <div id="wrapper">
-            <?php include 'sidenavbar.php' ?>
-            <div class="d-flex flex-column" id="content-wrapper">
-                <div id="content">
-                    <?php include 'topnavbar.php' ?>
+        <?php include 'header.php'?>
                     <div class="container">
                         <form action="" method="POST">
                             <div class="form-group">
@@ -66,18 +60,7 @@ if (!isset($_SESSION['logedin'])) {
                     </div>
 
                 </div>
-                <footer class="bg-white sticky-footer">
-                    <div class="container my-auto">
-                        <div class="text-center my-auto copyright"><span>Copyright © Brand 2022</span></div>
-                    </div>
-                </footer>
-            </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-        </div>
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/js/bs-init.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-        <script src="assets/js/theme.js"></script>
+               <?php include'footer.php'?>
     </body>
 
     </html>

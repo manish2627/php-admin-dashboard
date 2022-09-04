@@ -34,35 +34,22 @@ if (!isset($_SESSION['logedin'])) {
     <html>
 
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>Dashboard</title>
-
-
-        <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-        <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
-        <!-- Custom styles for this template-->
-        <link href="assets/css/styles.css" rel="stylesheet">
-        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     </head>
 
     <body id="page-top">
-        <?php foreach ($aleart_msg as $errmsg) {
-            echo '
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>message: </strong> ' . $errmsg . '
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>';
-        }
+      
+        <?php include 'header.php'?>
+
+                    <div class="container-fluid">
+                        <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                            <h3 class="text-dark mb-0">Dashboard</h3>
+                            <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a> -->
+                        </div>
+
+
+                        <div class="container-fluid">
+                        <?php
        if($_SESSION['crud_msg']) {
             echo '
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -75,20 +62,6 @@ if (!isset($_SESSION['logedin'])) {
         }
        
         ?>
-        <div id="wrapper">
-            <?php include 'sidenavbar.php' ?>
-            <div class="d-flex flex-column" id="content-wrapper">
-                <div id="content">
-                    <?php include 'topnavbar.php' ?>
-
-                    <div class="container-fluid">
-                        <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                            <h3 class="text-dark mb-0">Dashboard</h3>
-                            <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a> -->
-                        </div>
-
-
-                        <div class="container-fluid">
 
                             <div class="card shadow">
                                 <div class="card-header py-3">
@@ -196,21 +169,8 @@ if (!isset($_SESSION['logedin'])) {
                             </div>
                         </div>
                     </div>
-                    <footer class="bg-white sticky-footer">
-                        <div class="container my-auto">
-                            <div class="text-center my-auto copyright"><span>Copyright © Manish singh 2022</span></div>
-                        </div>
-                    </footer>
-                </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-            </div>
-            <script src="assets/js/jquery.min.js"></script>
-
-            <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-            <script src="assets/js/chart.min.js"></script>
-            <script src="assets/js/bs-init.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-            <script src="assets/js/theme.js"></script>
-            <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+                    <?php include 'footer.php'?>
+                    
             <script>
                 $(document).ready(function() {
                     $('.category_delete_btn').click(function(e) {

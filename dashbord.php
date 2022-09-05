@@ -107,13 +107,13 @@ if (!isset($_SESSION['logedin'])) {
                                                     <td>
                                                         <div class="row">
                                                             <!-- Button trigger modal for update form-->
-                                                            <form id="form" action="update.php" method="GET">
+                                                            <form id="form" action="category_update.php" method="GET">
                                                                 <input type="hidden" name="cat_update_id" value="<?php echo $data['id']; ?>">
 
-                                                                <button type="submit" class="btn-sm btn-primary " data-toggle="modal" data-target="#cat_update_Modal"> edit</button>
+                                                                <button type="submit" class="btn-sm btn-primary col " data-toggle="modal" data-target="#cat_update_Modal"> edit</button>
                                                             </form>
                                                             <input type="hidden" name="cat_delete_id" class="cat_delete_id" value="<?php echo $data['id']; ?>">
-                                                            <a href="javascript:void(0)" name="category_delete_btn" class="btn-sm mx-1 btn-danger category_delete_btn">Delete</a>
+                                                            <a href="javascript:void(0)" name="category_delete_btn" class="btn-sm mx-1 btn-danger category_delete_btn col">Delete</a>
 
                                                         </div>
                                                     </td>

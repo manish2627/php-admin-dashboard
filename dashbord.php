@@ -13,7 +13,8 @@ if (!isset($_SESSION['logedin'])) {
     //     $messages[] = $msg_result;
     // }
     // $messages = array_reverse($messages);
-
+  
+    
 
     //Get catgory details
     $result = mysqli_query($conn, "select * from category_table");

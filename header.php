@@ -3,7 +3,7 @@
 
 
 $nav_items = [
-    'category' => ['All Ctegory' => 'dashbord.php', 'Add new Category'=>'add_new_category.php'],
+    'category' => ['All Ctegory' => 'all_category.php', 'Add new Category'=>'add_new_category.php'],
     'Products' => ['All Products'=> 'all_products.php', 'Add new Product '=>'add_new_product.php'],
     'Users' => ['All Users'=> 'all_user.php', 'Add new Users '=>'add_new_user.php'],
     'Blogs' => ['All Blogs'=> 'all_blog.php', 'Add new Blog '=>'add_new_blog.php'],
@@ -57,7 +57,7 @@ $nav_items = [
         <?php foreach($nav_items as $item=>$val){ ?>
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo<?=$item?>" aria-expanded="true" aria-controls="collapseTwo<?=$item?>">
-                <i class="fas fa-fw fa-cog"></i>
+                <!-- <i class="fas fa-fw fa"></i> -->
                 <span><?=$item?></span>
             </a>
             <div id="collapseTwo<?=$item?>" class="collapse" aria-labelledby="headingTwo<?=$item?>" data-parent="#accordionSidebar">
@@ -71,7 +71,7 @@ $nav_items = [
         <?php }?>
 
         <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item"><a class="nav-link" href="table.php"><i class="fas fa-table"></i><span>Table</span></a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="table.php"><i class="fas fa-table"></i><span>Table</span></a></li> -->
         <!-- <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li> -->
         <!-- <li class="nav-item"><a class="nav-link" href="contactus.php"><i class="fas fa-address-book"></i><span>Contact Us</span></a></li> -->
 

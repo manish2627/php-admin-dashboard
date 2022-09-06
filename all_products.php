@@ -36,7 +36,7 @@ if (!isset($_SESSION['logedin'])) {
     <html>
 
     <head>
-        <title>Dashboard</title>
+        <title>All products </title>
     </head>
 
     <body id="page-top">
@@ -66,7 +66,7 @@ if (!isset($_SESSION['logedin'])) {
                 ?>
                 <div class="card shadow">
                     <div class="card-header py-3">
-                        <p class="text-primary m-0 font-weight-bold">Category Info</p>
+                        <p class="text-primary m-0 font-weight-bold">Products</p>
                     </div>
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -75,6 +75,7 @@ if (!isset($_SESSION['logedin'])) {
                                 <tr>
 
                                     <th scope="col">s.no</th>
+                                    <th scope="col">Images</th>
                                     <th scope="col">Product Name </th>
                                     <th scope="col">Product Slug</th>
                                     <th scope="col">Category</th>
@@ -84,7 +85,6 @@ if (!isset($_SESSION['logedin'])) {
                                     <th scope="col">Height</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Images</th>
 
                                     <th scope="col">Action</th>
                                 </tr>
@@ -96,22 +96,22 @@ if (!isset($_SESSION['logedin'])) {
                                     <tr>
 
                                         <td class="counterCell"><?= $i ?></td>
-                                        <td><?php echo $product['product_name']; ?></td>
-                                        <td><?php echo $product['product_slug']; ?></td>
-                                        <td><?php echo $product['category']; ?></td>
-                                        <td><?php echo $product['product_price']; ?></td>
-                                        <td><?php echo $product['product_price_discount']; ?></td>
-                                        <td><?php echo $product['product_weight']; ?></td>
-                                        <td><?php echo $product['product_height']; ?></td>
-                                        <td><?php echo $product['quantity']; ?></td>
-                                        <td><?php echo substr($product['description'] , 0,60); ?></td>
-                                        
                                         <!-- all images of product  -->
                                         <td >
                                             <?php foreach (explode(',', $product['product_images']) as $image) { ?>
                                                 <img style="height:50px" src="assets/img/product_images/<?= $image ?>" class="img-fluid img-thumbnail">
                                             <?php } ?>
                                         </td>
+                                        <td><?php echo $product['product_name']; ?></td>
+                                        <td><?php echo $product['product_slug']; ?></td>
+                                        <td><?php echo $product['category']; ?></td>
+                                        <td>Rs.<?php echo $product['product_price']; ?></td>
+                                        <td>Rs.<?php echo $product['product_price_discount']; ?></td>
+                                        <td><?php echo $product['product_weight']; ?></td>
+                                        <td><?php echo $product['product_height']; ?></td>
+                                        <td><?php echo $product['quantity']; ?></td>
+                                        <td><?php echo substr($product['description'] , 0,60); ?></td>
+                                        
 
                                         <td>
                                             <div class="row">

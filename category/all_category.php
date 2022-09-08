@@ -4,7 +4,7 @@ if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
     $aleart_msg = [];
-    include 'db.config.php';
+    include '../db.config.php';
 
        //Get catgory details
     $result = mysqli_query($conn, "select * from category_table");
@@ -27,7 +27,7 @@ if (!isset($_SESSION['logedin'])) {
 
     <body id="page-top">
       
-        <?php include 'header.php'?>
+        <?php include '../header.php'?>
 
                     <div class="container-fluid">
                         <div class="d-sm-flex justify-content-between align-items-center mb-4">
@@ -121,7 +121,7 @@ if (!isset($_SESSION['logedin'])) {
                             </div>
                         </div>
                     </div>
-                    <?php include 'footer.php'?>
+                    <?php include '../footer.php'?>
                     
             <script>
                 $(document).ready(function() {

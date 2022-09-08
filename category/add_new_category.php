@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.config.php';
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
@@ -22,7 +22,7 @@ if (!isset($_SESSION['logedin'])) {
                 $add_query = "INSERT INTO `category_table` ( `category_name`, `category_slug`,`created_by`) VALUES ('$cat_name','$cat_slug','$user_name')";
                 mysqli_query($conn, $add_query);
 
-                header("location:dashbord.php");
+                header("location:".APP_URL."/category/all_category.php");
             }
         }
     
@@ -40,7 +40,7 @@ if (!isset($_SESSION['logedin'])) {
     </head>
 
     <body id="page-top">
-        <?php include 'header.php'?>
+        <?php include '../header.php'?>
                     <div class="container">
                         <form action="" method="POST">
                             <div class="form-group">
@@ -60,7 +60,7 @@ if (!isset($_SESSION['logedin'])) {
                     </div>
 
                 </div>
-               <?php include'footer.php'?>
+               <?php include'../footer.php'?>
     </body>
 
     </html>

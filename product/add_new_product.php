@@ -1,9 +1,10 @@
 <?php
 session_start();
-include 'db.config.php';
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:../login.php");
 } else {
+    // include '../db.config.php';
     //add new product
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -38,14 +39,14 @@ if (!isset($_SESSION['logedin'])) {
             move_uploaded_file($tempname, $folder);}
             $images = implode(",",$images);
 
-            include 'db.config.php';
+          
             // echo $product_name,$product_slug,$product_category,$product_desc,$product_height,$product_weight,$product_price,$product_price_discount;
             // echo $images;
             $q= "INSERT INTO `products_tables` ( `product_name`, `product_slug`,`category`,`product_price`, `product_price_discount`, `product_weight`, `product_height`, `quantity`, `description`,  `created_by`,`product_images`)
                                  VALUES ('$product_name', '$product_slug','$product_category','$product_price','$product_price_discount', '$product_weight','$product_height','$product_quantity' ,'$product_desc','$created_by','$images')";
 
             mysqli_query($conn, $q);
-
+            header("location:".APP_URL."/product/all_products.php");
             header("location:all_products.php");
         }
     }
@@ -64,7 +65,7 @@ if (!isset($_SESSION['logedin'])) {
     </head>
 
     <body id="page-top">
-        <?php include 'header.php' ?>
+        <?php include '../header.php' ?>
         <div class="container">
             <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
                 <fieldset>
@@ -187,7 +188,7 @@ if (!isset($_SESSION['logedin'])) {
         </div>
 
         </div>
-        <?php include 'footer.php' ?>
+        <?php include '../footer.php' ?>
     </body>
 
     </html>

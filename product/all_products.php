@@ -4,7 +4,7 @@ if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
 
-    include 'db.config.php';
+    include '../db.config.php';
 
 
 
@@ -41,7 +41,7 @@ if (!isset($_SESSION['logedin'])) {
 
     <body id="page-top">
 
-        <?php include 'header.php' ?>
+        <?php include '../header.php' ?>
 
         <div class="container-fluid">
             <div class="d-sm-flex justify-content-between align-items-center mb-4">
@@ -99,7 +99,7 @@ if (!isset($_SESSION['logedin'])) {
                                         <!-- all images of product  -->
                                         <td >
                                             <?php foreach (explode(',', $product['product_images']) as $image) { ?>
-                                                <img style="height:50px" src="assets/img/product_images/<?= $image ?>" class="img-fluid img-thumbnail">
+                                                <img style="height:50px" src="<?= APP_URL; ?>/assets/img/product_images/<?= $image ?>" class="img-fluid img-thumbnail">
                                             <?php } ?>
                                         </td>
                                         <td><?php echo $product['product_name']; ?></td>
@@ -141,7 +141,7 @@ if (!isset($_SESSION['logedin'])) {
 
 
             </div>
-            <?php include 'footer.php' ?>
+            <?php include '../footer.php' ?>
 
 
             <script>

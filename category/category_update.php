@@ -29,7 +29,7 @@ if (!isset($_SESSION['logedin'])) {
                 $update_query = " UPDATE `category_table` SET `category_name`='$update_name',`category_slug`='$update_slug',`status`='$update_status',`updated_on`=CURRENT_TIMESTAMP() WHERE id = '$update_id'";
                 mysqli_query($conn, $update_query);
                 $_SESSION['crud_msg'] = "your category has been updated...!!";
-                header('location:all_category.php');
+                header("location:".APP_URL."/category/all_category.php");
             
         }
 

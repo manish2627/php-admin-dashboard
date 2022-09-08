@@ -2,12 +2,12 @@
 
 
 
-$nav_items = [
-    'category' => ['All Ctegory' => 'all_category.php', 'Add new Category'=>'add_new_category.php'],
-    'Products' => ['All Products'=> 'all_products.php', 'Add new Product '=>'add_new_product.php'],
-    'Users' => ['All Users'=> 'all_user.php', 'Add new Users '=>'add_new_user.php'],
-    'Blogs' => ['All Blogs'=> 'all_blog.php', 'Add new Blog '=>'add_new_blog.php'],
-    'Orders' => ['All Orders'=> 'all_order.php', 'Add new Order '=>'add_new_order.php'],
+$nav_menu = [
+    'category' => ['All Ctegory' =>  APP_URL.'/category/all_category.php', 'Add new Category'=>APP_URL.'/category/add_new_category.php'],
+    'Products' => ['All Products'=> APP_URL.'/product/all_products.php', 'Add new Product '=>APP_URL.'/product/add_new_product.php'],
+    'Users' => ['All Users'=> APP_URL.'/blogs/all_user.php', 'Add new Users '=>APP_URL.'/product/add_new_user.php'],
+    'Blogs' => ['All Blogs'=> APP_URL.'/blogs/all_blogs.php', 'Add new Blog '=>APP_URL.'/blogs/add_new_blog.php'],
+    'Orders' => ['All Orders'=> APP_URL.'/all_order.php', 'Add new Order '=>APP_URL.'/add_new_order.php'],
 ]
 
 
@@ -25,13 +25,13 @@ $nav_items = [
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     
-        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?= APP_URL; ?>/assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-        <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+        <link rel="stylesheet" href="<?= APP_URL; ?>/assets/fonts/fontawesome-all.min.css">
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
         <!-- Custom styles for this template-->
-        <link href="assets/css/styles.css" rel="stylesheet">
-        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="<?= APP_URL; ?>/assets/css/styles.css" rel="stylesheet">
+        <link href="<?= APP_URL; ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     </head>
 
@@ -46,7 +46,7 @@ $nav_items = [
     <hr class="sidebar-divider my-0">
 
     <ul class="navbar-nav text-light" id="accordionSidebar">
-        <li class="nav-item"><a class="nav-link active" href="dashbord.php"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item"><a class="nav-link active" href="<?= APP_URL; ?>/dashbord.php"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
 
         <!-- Heading -->
         <div class="sidebar-heading">
@@ -54,7 +54,7 @@ $nav_items = [
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <?php foreach($nav_items as $item=>$val){ ?>
+        <?php foreach($nav_menu as $item=>$val){ ?>
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo<?=$item?>" aria-expanded="true" aria-controls="collapseTwo<?=$item?>">
                 <!-- <i class="fas fa-fw fa"></i> -->
@@ -186,9 +186,9 @@ $nav_items = [
             </li>
             <div class="d-none d-sm-block topbar-divider"></div>
             <li class="nav-item dropdown no-arrow">
-                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?= $_SESSION['username'] ?></span><img class="border rounded-circle img-profile" src="assets/img/profile/<?= $profile_pic = mysqli_fetch_assoc($query = mysqli_query($conn, "SELECT profile_pic FROM users WHERE `user_id` = " . $_SESSION['user_id']))['profile_pic']; ?>"></a>
-                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php">Logout</a>
+                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?= $_SESSION['username'] ?></span><img class="border rounded-circle img-profile" src="<?= APP_URL; ?>/assets/img/profile/<?= $profile_pic = mysqli_fetch_assoc($query = mysqli_query($conn, "SELECT profile_pic FROM users WHERE `user_id` = " . $_SESSION['user_id']))['profile_pic']; ?>"></a>
+                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="../profile.php"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="<?= APP_URL; ?>/logout.php">Logout</a>
                     </div>
                 </div>
             </li>

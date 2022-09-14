@@ -2,13 +2,51 @@
 
 
 
+// $nav_menu = [
+//     'category' => ['All Ctegory' =>  APP_URL.'/category/all_category.php', 'Add new Category'=>APP_URL.'/category/add_new_category.php'],
+//     'Products' => ['All Products'=> APP_URL.'/product/all_products.php', 'Add new Product '=>APP_URL.'/product/add_new_product.php'],
+//     'Users' => ['All Users'=> APP_URL.'/blogs/all_user.php', 'Add new Users '=>APP_URL.'/product/add_new_user.php'],
+//     'Blogs' => ['All Blogs'=> APP_URL.'/blogs/all_blogs.php', 'Add new Blog '=>APP_URL.'/blogs/add_new_blog.php'],
+//     'Orders' => ['All Orders'=> APP_URL.'/all_order.php', 'Add new Order '=>APP_URL.'/add_new_order.php'],
+// ];
 $nav_menu = [
-    'category' => ['All Ctegory' =>  APP_URL.'/category/all_category.php', 'Add new Category'=>APP_URL.'/category/add_new_category.php'],
-    'Products' => ['All Products'=> APP_URL.'/product/all_products.php', 'Add new Product '=>APP_URL.'/product/add_new_product.php'],
-    'Users' => ['All Users'=> APP_URL.'/blogs/all_user.php', 'Add new Users '=>APP_URL.'/product/add_new_user.php'],
-    'Blogs' => ['All Blogs'=> APP_URL.'/blogs/all_blogs.php', 'Add new Blog '=>APP_URL.'/blogs/add_new_blog.php'],
-    'Orders' => ['All Orders'=> APP_URL.'/all_order.php', 'Add new Order '=>APP_URL.'/add_new_order.php'],
-]
+    [
+       'menu_name'=>'Category',
+       'sub_menu' => [
+           ['submenu_name' => 'All Category','url' => APP_URL.'/category/all_category.php'],
+           ['submenu_name' => 'Add new Category','url' =>APP_URL.'/category/add_new_category.php']
+       ]
+   ],
+    [
+       'menu_name'=>'Products',
+       'sub_menu' => [
+           ['submenu_name' => 'All Products','url' => APP_URL.'/product/all_products.php'],
+           ['submenu_name' => 'Add new Product','url' => APP_URL.'/product/add_new_product.php']
+       ]
+   ],
+    [
+       'menu_name'=>'Users',
+       'sub_menu' => [
+           ['submenu_name' => 'All Users','url' => APP_URL.'/users/all_users.php'],
+           ['submenu_name' => 'Add new Users','url' => APP_URL.'/users/add_new_user.php']
+       ]
+   ],
+   [
+       'menu_name'=>'Blogs',
+       'sub_menu' => [
+           ['submenu_name' => 'All Blogs','url' => APP_URL.'/blogs/all_blogs.php'],
+           ['submenu_name' => 'Add new Blog','url' => APP_URL.'/blogs/add_new_blog.php']
+       ]
+   ],
+    [
+       'menu_name'=>'Orders',
+       'sub_menu' => [
+           ['submenu_name' => 'All Orders','url' => APP_URL.'/orders/all_orders.php'],
+           ['submenu_name' => 'Add new Order','url' => 'add_new_order.php']
+       ]
+   ],
+   
+];
 
 
 
@@ -53,17 +91,17 @@ $nav_menu = [
             Interface
         </div>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <?php foreach($nav_menu as $item=>$val){ ?>
+         <!-- Nav Item - Pages Collapse Menu -->
+         <?php foreach($nav_menu as $nav_item){ ?>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo<?=$item?>" aria-expanded="true" aria-controls="collapseTwo<?=$item?>">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo<?=$nav_item['menu_name']?>" aria-expanded="true" aria-controls="collapseTwo<?=$nav_item['menu_name']?>">
                 <!-- <i class="fas fa-fw fa"></i> -->
-                <span><?=$item?></span>
+                <span><?=$nav_item['menu_name']?></span>
             </a>
-            <div id="collapseTwo<?=$item?>" class="collapse" aria-labelledby="headingTwo<?=$item?>" data-parent="#accordionSidebar">
+            <div id="collapseTwo<?=$nav_item['menu_name']?>" class="collapse" aria-labelledby="headingTwo<?=$nav_item['menu_name']?>" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                   <?php foreach($val as $val=>$href_link){?>
-                    <a class="collapse-item" href="<?=$href_link?>"><?=$val?></a>
+                   <?php foreach($nav_item['sub_menu'] as $sub_menu){?>
+                    <a class="collapse-item" href="<?=$sub_menu['url']?>"><?=$sub_menu['submenu_name']?></a>
                     <?php }?>
                 </div>
             </div>
@@ -172,7 +210,7 @@ $nav_menu = [
                     </a>
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="dropdown-list-image mr-3">
-                            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
+                            <img class="rounded-circle" src="...." alt="...">
                             <div class="status-indicator bg-success"></div>
                         </div>
                         <div>
@@ -187,7 +225,7 @@ $nav_menu = [
             <div class="d-none d-sm-block topbar-divider"></div>
             <li class="nav-item dropdown no-arrow">
                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?= $_SESSION['username'] ?></span><img class="border rounded-circle img-profile" src="<?= APP_URL; ?>/assets/img/profile/<?= $profile_pic = mysqli_fetch_assoc($query = mysqli_query($conn, "SELECT profile_pic FROM users WHERE `user_id` = " . $_SESSION['user_id']))['profile_pic']; ?>"></a>
-                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="../profile.php"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
+                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="<?= APP_URL?>/profile.php"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
                         <div class="dropdown-divider"></div><a class="dropdown-item" href="<?= APP_URL; ?>/logout.php">Logout</a>
                     </div>
                 </div>

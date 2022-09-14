@@ -6,9 +6,6 @@ if (!isset($_SESSION['logedin'])) {
 
     include '../db.config.php';
 
-
-
-
     //Get catgory details
     $result = mysqli_query($conn, "select * from category_table");
     $user_query = mysqli_query($conn, "SELECT * FROM USERS ");
@@ -36,6 +33,8 @@ if (!isset($_SESSION['logedin'])) {
     <html>
 
     <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
         <title>All products </title>
     </head>
 
@@ -85,6 +84,7 @@ if (!isset($_SESSION['logedin'])) {
                                     <th scope="col">Height</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Description</th>
+                                    <th scope="col">View</th>
 
                                     <th scope="col">Action</th>
                                 </tr>
@@ -97,9 +97,18 @@ if (!isset($_SESSION['logedin'])) {
 
                                         <td class="counterCell"><?= $i ?></td>
                                         <!-- all images of product  -->
-                                        <td >
-                                            <?php foreach (explode(',', $product['product_images']) as $image) { ?>
-                                                <img style="height:50px" src="<?= APP_URL; ?>/assets/img/product_images/<?= $image ?>" class="img-fluid img-thumbnail">
+                                        <td>
+                                            <?php
+                                            $product_name = $product['product_name'];
+                                            $q_product_images = mysqli_query($conn, "SELECT `image_name` FROM `products_images` WHERE `product_name`='$product_name'");
+                                            $images = [];
+                                            while ($image = mysqli_fetch_assoc($q_product_images)) {
+                                                $images[] = $image['image_name']; ?>
+                                                
+                                                    <img class="d-block w-100 my-1 " style="height:50px ;" src="../assets/img/product_images/<?= $image['image_name'] ?>">
+                                               
+
+
                                             <?php } ?>
                                         </td>
                                         <td><?php echo $product['product_name']; ?></td>
@@ -110,8 +119,18 @@ if (!isset($_SESSION['logedin'])) {
                                         <td><?php echo $product['product_weight']; ?></td>
                                         <td><?php echo $product['product_height']; ?></td>
                                         <td><?php echo $product['quantity']; ?></td>
-                                        <td><?php echo substr($product['description'] , 0,60); ?></td>
-                                        
+                                        <td><?php echo substr($product['description'], 0, 60); ?></td>
+                                        <td>
+                                            <!-- for vew the product details  -->
+                                            <form id="form" action="product_view.php" method="GET">
+                                                <input type="hidden" name="product_update_id" value="<?php echo $product['product_id']; ?>">
+
+                                                <button type="submit" class="btn-sm btn-primary " data-toggle="modal" data-target="#cat_update_Modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
+                                                        <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z" />
+                                                    </svg></button>
+                                            </form>
+                                        </td>
+
 
                                         <td>
                                             <div class="row">
@@ -121,6 +140,7 @@ if (!isset($_SESSION['logedin'])) {
 
                                                     <button type="submit" class="btn-sm btn-primary " data-toggle="modal" data-target="#cat_update_Modal"> edit</button>
                                                 </form>
+
                                                 <input type="hidden" name="product_delte_id" class="product_delete_id" value="<?php echo $product['product_id']; ?>">
                                                 <a href="javascript:void(0)" name="product_delete_btn" class="btn-sm mx-1 btn-danger product_delete_btn">Delete</a>
 

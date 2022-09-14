@@ -1,8 +1,8 @@
 <?php
 session_start();
-include 'db.config.php';
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("../location:login.php");
 } else {
     // check edit request 
     // if (!isset($_GET['cat_update'])) {
@@ -60,7 +60,7 @@ if (!isset($_SESSION['logedin'])) {
     </head>
 
     <body id="page-top">
-        <?php include 'header.php' ?>
+        <?php include '../header.php' ?>
         <div class="container">
             <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
                 <fieldset>
@@ -170,10 +170,33 @@ if (!isset($_SESSION['logedin'])) {
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
                                    
-                                <?php foreach (explode(',', $update_product['product_images']) as $image) { ?>
-                                                <img  src="assets/img/product_images/<?= $image ?>"  class="w-100 shadow-1-strong rounded mb-4" value="<?= $image ?>">
-                                            <?php 
-                                        } ?>
+                                <?php  
+                                            
+                                            $q_product_images = mysqli_query($conn, "SELECT * FROM `products_images` WHERE `product_name`='".$update_product['product_name']."'");
+                                            $images = [];
+                                            while ($image = mysqli_fetch_assoc($q_product_images)) 
+                                                {
+                                                $images[] = $image; 
+                                                }
+                                                
+                                                foreach($images as $image ){?>
+                                                
+                                                    <div class="row">
+
+                                                        <img class="d-block w-100 my-1 col-md-4 image " style="height:50px ;" src="../assets/img/product_images/<?= $image['image_name'] ?>">
+                                                        <input type="hidden" name="image_delete_id" class="image_delete_id" value="<?php echo $image['image_id']; ?>">
+                                                <a href="javascript:void(0)" name="image_delete_btn" class="btn-sm mx-1 btn-danger image_delete_btn">Delete</a>
+                                                        
+                                                    </div>
+                                                
+                                                <?php }
+                                                ?>
+
+
+                                           
+                                
+                                
+                            
                                 </div>
                                
 
@@ -200,7 +223,54 @@ if (!isset($_SESSION['logedin'])) {
         </div>
 
         </div>
-        <?php include 'footer.php' ?>
+        <?php include '../footer.php' ?>
+        <script>
+                $(document).ready(function() {
+                    $('.image_delete_btn').click(function(e) {
+                        e.preventDefault();
+                        //  console.log("hello");
+                        var delete_id = $(this).find(".image_delete_id").val();
+                        console.log(delete_id) ;
+
+                        swal({
+                                title: "Are you sure?",
+                                text: "Once deleted, you will not be able to recover this image!",
+                                icon: "warning",
+                                buttons: true,
+                                dangerMode: true,
+                            })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "delete_product.php",
+                                        data: {
+                                            "delete_image_btn": 1,
+                                            "image_id": delete_id
+                                            
+                                        },
+
+                                        success: function(response) {
+                                            swal("your image deleted successfully ", {
+                                                icon: "success",
+
+                                            }).then((result) => {
+                                                location.reload();
+
+                                            });
+
+
+                                        }
+
+                                    });
+
+
+                                }
+                            });
+
+                    });
+                });
+            </script>
     </body>
 
     </html>

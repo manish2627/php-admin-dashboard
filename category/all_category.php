@@ -142,7 +142,7 @@ if (!isset($_SESSION['logedin'])) {
                                 if (willDelete) {
                                     $.ajax({
                                         type: "POST",
-                                        url: "delete.php",
+                                        url: "<?= APP_URL?>/category/delete.php",
                                         data: {
                                             "delete_btn": 1,
                                             "id": delete_id

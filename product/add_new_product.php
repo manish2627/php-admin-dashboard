@@ -30,20 +30,25 @@ if (!isset($_SESSION['logedin'])) {
 
             // upload product images 
 
-            $images = [];
+          
             foreach($_FILES['image']['tmp_name'] as $key=>$val){
             $filename = $_FILES['image']['name'][$key];
             $tempname = $_FILES['image']['tmp_name'][$key];
-            $folder = "assets/img/product_images/" . $_FILES['image']['name'][$key];
-            $images[] = $filename;
-            move_uploaded_file($tempname, $folder);}
-            $images = implode(",",$images);
+            $folder = "../assets/img/product_images/".$_FILES['image']['name'][$key];
+            $q_image = "INSERT INTO `products_images`( `product_name`, `category_name`, `image_path`, `image_name`) VALUES
+                                                     ('$product_name','product_category','assest/img/product_images/','$filename')";  
+            mysqli_query($conn, $q_image);     
+            
+            move_uploaded_file($tempname, $folder);
+        
+        }
+            
 
           
             // echo $product_name,$product_slug,$product_category,$product_desc,$product_height,$product_weight,$product_price,$product_price_discount;
             // echo $images;
-            $q= "INSERT INTO `products_tables` ( `product_name`, `product_slug`,`category`,`product_price`, `product_price_discount`, `product_weight`, `product_height`, `quantity`, `description`,  `created_by`,`product_images`)
-                                 VALUES ('$product_name', '$product_slug','$product_category','$product_price','$product_price_discount', '$product_weight','$product_height','$product_quantity' ,'$product_desc','$created_by','$images')";
+            $q= "INSERT INTO `products_tables` ( `product_name`, `product_slug`,`category`,`product_price`, `product_price_discount`, `product_weight`, `product_height`, `quantity`, `description`,  `created_by`)
+                                 VALUES ('$product_name', '$product_slug','$product_category','$product_price','$product_price_discount', '$product_weight','$product_height','$product_quantity' ,'$product_desc','$created_by')";
 
             mysqli_query($conn, $q);
             header("location:".APP_URL."/product/all_products.php");

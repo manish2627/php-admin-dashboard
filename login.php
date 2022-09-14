@@ -62,18 +62,14 @@ if (isset($_SESSION['logedin'])) {
       </div>';
       // echo '<meta http-equiv="refresh" content="0.5;url=dashbord.php">';
         }
- if ($_SESSION['crud_msg']) {
+ if (isset($_SESSION['crud_msg'])) {
           echo '
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>';
-     
-      
-        
-        
+      </div>';   
  }
       
         ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.config.php';
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
     header("location:login.php");
 } else {
@@ -45,7 +45,7 @@ if (!isset($_SESSION['logedin'])) {
         </head>
 
         <body id="page-top">
-           <?php include 'header.php'?>
+           <?php include '../header.php'?>
                         <div class="container">
                             <form action="" method="POST">
                                 <div class="form-group">
@@ -78,7 +78,7 @@ if (!isset($_SESSION['logedin'])) {
                         </div>
 
                     </div>
-                    <?php include 'footer.php'?>
+                    <?php include '../footer.php'?>
         </body>
 
         </html>

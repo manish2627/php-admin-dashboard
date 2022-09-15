@@ -29,23 +29,21 @@ if (!isset($_SESSION['logedin'])) {
         $product_quantity = $_POST['quantity'];
         $product_desc = $_POST['product_description'];  
         
-        $images = explode(",",$update_product['product_images']);
+        
+        
         foreach($_FILES['new_image']['tmp_name'] as $key=>$val){
             $filename = $_FILES['new_image']['name'][$key];
             $tempname = $_FILES['new_image']['tmp_name'][$key];
-            $folder = "assets/img/product_images/" . $_FILES['new_image']['name'][$key];
-            $new_images[] = $filename;
+            $folder = "../assets/img/product_images/".$_FILES['new_image']['name'][$key];
+            $q_image = "INSERT INTO `products_images`( `product_name`, `category_name`, `image_path`, `image_name`) VALUES
+                                                     ('$product_name','$product_category','assest/img/product_images/','$filename')";  
+            mysqli_query($conn, $q_image);     
+            
             move_uploaded_file($tempname, $folder);
-        }
-           
-        $images = array_merge($images, $new_images);
-           
-        $images = implode(",",$images);
-            
-            
+        }          
 
         // echo $update_id,$update_name,$update_slug,$update_status,$update_time,$update_user_id;
-        $update_query = " UPDATE `products_tables` SET  `product_name`='$product_name',`product_slug`='$product_slug',`category`='$product_category',`product_price`='$product_price',`product_price_discount`='$product_price_discount',`product_weight`='$product_weight',`product_height`='$product_height',`quantity`='$product_quantity',`description`='$product_desc',`product_images`='$images'WHERE `product_id`='$product_id'";
+        $update_query = " UPDATE `products_tables` SET  `product_name`='$product_name',`product_slug`='$product_slug',`category`='$product_category',`product_price`='$product_price',`product_price_discount`='$product_price_discount',`product_weight`='$product_weight',`product_height`='$product_height',`quantity`='$product_quantity',`description`='$product_desc'WHERE `product_id`='$product_id'";
         mysqli_query($conn, $update_query);
         $_SESSION['crud_msg'] = "your product details updated...!!";
         header('location:all_products.php');
@@ -229,7 +227,7 @@ if (!isset($_SESSION['logedin'])) {
                     $('.image_delete_btn').click(function(e) {
                         e.preventDefault();
                         //  console.log("hello");
-                        var delete_id = $(this).find(".image_delete_id").val();
+                        var delete_id = $(this).closest("body").find(".image_delete_id").val();
                         console.log(delete_id) ;
 
                         swal({

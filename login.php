@@ -5,8 +5,6 @@ session_start();
 if (isset($_SESSION['logedin'])) {
   header("location:dashbord.php");
 } else {
-
-
   include 'db.config.php';
   $errmsg = false;
   if ($_SERVER["REQUEST_METHOD"] == "POST") {

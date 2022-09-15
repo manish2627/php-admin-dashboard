@@ -28,9 +28,6 @@ if (!isset($_SESSION['logedin'])) {
            
             }
         }
-       
-       
-
 
         $email = $_POST['email'];
         $first_name = $_POST['first_name'];

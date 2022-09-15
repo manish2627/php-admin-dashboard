@@ -5,9 +5,8 @@ if (!isset($_SESSION['logedin'])) {
 } else {
 
     include '../db.config.php';
-
     //Get catgory details
-    $result = mysqli_query($conn, "select * from category_table");
+
     $user_query = mysqli_query($conn, "SELECT * FROM USERS ");
 
     $users = [];
@@ -15,12 +14,47 @@ if (!isset($_SESSION['logedin'])) {
         $users[] = $user;
     }
 
-    $category_data = [];
-    while ($data =  mysqli_fetch_assoc($result)) {
-        $category_data[] = $data;
-    }
+    // query for the search 
 
-    $product_q = mysqli_query($conn, "SELECT * FROM products_tables");
+
+    $product_query = "SELECT * FROM products_tables";
+    $filters = array_filter($_GET);
+    // echo"<pre>";
+    // print_r($filters);
+
+    if (count($filters)) {
+        $product_query .= " WHERE";
+
+      
+
+        $i = 0;
+        foreach ($filters as $key => $value) {$i++;
+            
+            
+            $product_query .= " `$key` = '$value'";  
+           
+            if (count($filters) > $i) { 
+                $product_query .= " &&";
+            }
+        }
+    }
+    // echo $product_query;
+    // $category = $_GET['category'];
+    // $product_name = $_GET['product_name'];
+
+    // if ($category != 'all') {
+    //     $product_query .= " `category`='$category' ";
+    // }
+    // if ($product_name != '') {
+    //     $product_query .= "&&`product_name` = '$product_name'";
+    // }
+
+    // if ($category == "all" && $product_name == '') {
+    //     $product_query = "SELECT * FROM products_tables";
+    // }
+    // echo $product_query;
+
+    $product_q = mysqli_query($conn, $product_query);
     $products = [];
     while ($product = mysqli_fetch_assoc($product_q)) {
         $products[] =  $product;
@@ -68,30 +102,9 @@ if (!isset($_SESSION['logedin'])) {
                         <p class="text-primary m-0 font-weight-bold">Products</p>
                     </div>
 
-
-                    <!-- product search form start here -->
-                    <form action="product_search.php" >
-                        <div class="row mx-2">
-                            <div class=" col-md-3">
-
-                                <input type="text" class="form-control" name="product_name" placeholder="Prouct name">
-                            </div>
-                            <div class="col-md-3">
-                                <select class="form-select" name="category" aria-label="Default select example" style="width:100% ;">
-                                    <option value=""> All category </option>
-                                    <?php foreach($category_data as $category){ ?>
-                                    <option ><?= $category['category_name']?></option>
-                                    <?php }?>                                   
-                                </select>
-                            </div>
-                           
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary">Search</button>
-                            </div>
-                        </div>
-                    </form>
-                            <!-- product search form ends here -->
-
+                    <?php if(count($products)<= 0){
+                        echo "<h5>product not found </h5>";
+                        }else {?>
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                         <table class="table my-0" id="dataTable">
                             <thead>
@@ -180,7 +193,7 @@ if (!isset($_SESSION['logedin'])) {
                             </tbody>
 
                         </table>
-                    </div>
+                    </div><?php }?>
                 </div>
 
 

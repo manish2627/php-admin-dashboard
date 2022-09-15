@@ -42,7 +42,7 @@ $nav_menu = [
        'menu_name'=>'Orders',
        'sub_menu' => [
            ['submenu_name' => 'All Orders','url' => APP_URL.'/orders/all_orders.php'],
-           ['submenu_name' => 'Add new Order','url' => 'add_new_order.php']
+        //    ['submenu_name' => 'Add new Order','url' => 'add_new_order.php']
        ]
    ],
    

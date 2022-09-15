@@ -21,15 +21,15 @@ if (!isset($_SESSION['logedin'])) {
     $result = mysqli_query($conn, "select * from category_table");
     $user_query = mysqli_query($conn, "SELECT * FROM USERS ");
 
-    $users = [];
-    while ($user =  mysqli_fetch_assoc($user_query)) {
-        $users[] = $user;
-    }
+    // $users = [];
+    // while ($user =  mysqli_fetch_assoc($user_query)) {
+    //     $users[] = $user;
+    // }
 
-    $category_data = [];
-    while ($data =  mysqli_fetch_assoc($result)) {
-        $category_data[] = $data;
-    }
+    // $category_data = [];
+    // while ($data =  mysqli_fetch_assoc($result)) {
+    //     $category_data[] = $data;
+    // }
 
     $product_q = mysqli_query($conn, "SELECT * FROM products_tables");
     $products = [];
@@ -126,7 +126,7 @@ if (!isset($_SESSION['logedin'])) {
                                                         <option value="Deliverd">Deliverd</option>
                                                         <option value="Cancel">Cancel</option>
                                                     </select>
-                                                    <button type="submit" name="order_status_btn">er</button>
+                                                    <button type="submit" name="order_status_btn">save</button>
                                                 </form>
                                             </div>
                                             

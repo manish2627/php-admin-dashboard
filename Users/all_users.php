@@ -32,7 +32,7 @@ if (!isset($_SESSION['logedin'])) {
 
         <div class="container-fluid">
             <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                <h3 class="text-dark mb-0">Orders :</h3>
+                <h3 class="text-dark mb-0">Users :</h3>
                 <!-- <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a> -->
             </div>
 
@@ -53,7 +53,7 @@ if (!isset($_SESSION['logedin'])) {
                 ?>
                 <div class="card shadow">
                     <div class="card-header py-3">
-                        <p class="text-primary m-0 font-weight-bold">Products</p>
+                        <p class="text-primary m-0 font-weight-bold">Orders</p>
                     </div>
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">

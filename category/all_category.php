@@ -147,22 +147,14 @@ if (!isset($_SESSION['logedin'])) {
                                             "delete_btn": 1,
                                             "id": delete_id
                                         },
-
                                         success: function(response) {
                                             swal("your category deleted successfully ", {
                                                 icon: "success",
-
                                             }).then((result) => {
                                                 location.reload();
-
                                             });
-
-
                                         }
-
                                     });
-
-
                                 }
                             });
 

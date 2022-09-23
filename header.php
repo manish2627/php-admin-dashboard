@@ -28,7 +28,7 @@ $nav_menu = [
        'menu_name'=>'Users',
        'sub_menu' => [
            ['submenu_name' => 'All Users','url' => APP_URL.'/users/all_users.php'],
-           ['submenu_name' => 'Add new Users','url' => APP_URL.'/users/add_new_user.php']
+        //    ['submenu_name' => 'Add new Users','url' => APP_URL.'/users/add_new_user.php']
        ]
    ],
    [

@@ -1,10 +1,11 @@
 <?php
 session_start();
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:../login.php");
+    header("location:".APP_URL."/login.php");
 } else {
 
-    include '../db.config.php';
+    
 
     // get the product
     $product_id = $_GET['product_update_id'];

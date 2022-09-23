@@ -2,7 +2,7 @@
 session_start();
 include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("../location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
        
         $query = "SELECT * FROM blogs_table where blog_id =".$_GET['blog_update_id'];

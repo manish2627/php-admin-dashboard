@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
 
     include '../db.config.php';
@@ -68,7 +68,7 @@ if (!isset($_SESSION['logedin'])) {
 
             <div class="container-fluid">
                 <?php
-                if ($_SESSION['crud_msg']) {
+                if (isset($_SESSION['crud_msg']) && !empty($_SESSION['crud_msg'])) {
                     echo '
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
@@ -81,9 +81,7 @@ if (!isset($_SESSION['logedin'])) {
 
                 ?>
                 <div class="card shadow">
-                    <div class="card-header py-3">
-                        <p class="text-primary m-0 font-weight-bold">Products</p>
-                    </div>
+                 
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                         <table class="table my-0" id="dataTable">

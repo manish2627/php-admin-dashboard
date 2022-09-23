@@ -1,10 +1,11 @@
 <?php
 session_start();
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
 
-    include '../db.config.php';
+   
     //Get catgory details
 
     $user_query = mysqli_query($conn, "SELECT * FROM USERS ");
@@ -16,29 +17,42 @@ if (!isset($_SESSION['logedin'])) {
 
     // query for the search 
 
-
+    
     $product_query = "SELECT * FROM products_tables";
+  
     $filters = array_filter($_GET);
     // echo"<pre>";
     // print_r($filters);
 
     if (count($filters)) {
-        $product_query .= " WHERE";
+        $product_query .= " WHERE"; 
+       
+        
+        // // if price fillter is use 
+        // if(isset($filters['min_price']) && isset($filters['max_price']) ){
+            
+                $product_query .= " `product_price` BETWEEN ".$filters['min_price']." AND ".$filters['max_price']." ";
+                unset($filters['min_price']) ;
+                unset($filters['max_price']) ;
+    
+        // }
 
-      
 
         $i = 0;
-        foreach ($filters as $key => $value) {$i++;
-            
-            
-            $product_query .= " `$key` = '$value'";  
-           
+       
+        foreach ($filters as $key => $value) {
             if (count($filters) > $i) { 
                 $product_query .= " &&";
             }
+            
+            $product_query .= " $key = '$value'";  
+            $i++;
+           
+           
         }
     }
-    // echo $product_query;
+    
+    // echo $product_query;m   
     // $category = $_GET['category'];
     // $product_name = $_GET['product_name'];
 
@@ -105,6 +119,55 @@ if (!isset($_SESSION['logedin'])) {
                     <?php if(count($products)<= 0){
                         echo "<h5>product not found </h5>";
                         }else {?>
+                         <!-- product search form start here -->
+                    <form action="product_search.php">
+                        <div class="row mx-2">
+                            <div class=" col-md-3">
+
+                                <input type="text" class="form-control" name="product_name" placeholder="Prouct name">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" name="category" aria-label="Default select example" style="width:100% ;">
+                                    <option value=""> All category </option>
+                                    <?php foreach ($category_data as $category) { ?>
+                                        <option><?= $category['category_name'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3 row">
+                                <div class="col-md-6">
+                                <select class="form-select" name="min_price" aria-label="Default select example" style="width:100% ;">
+                                    <option selected value="01">MInimum Price  </option>
+
+                                    <option value="5"> 5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+
+
+                                </select>
+                                </div>
+                                <div class="col-md-6">
+                                <select class="form-select" name="max_price" aria-label="Default select example" style="width:100% ;">
+                                    <option selected value="100">MAx Price </option>
+
+                                    
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="20">30</option>
+
+
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- product search form ends here -->
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                         <table class="table my-0" id="dataTable">
                             <thead>

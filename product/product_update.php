@@ -2,7 +2,7 @@
 session_start();
 include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("../location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
     // check edit request 
     // if (!isset($_GET['cat_update'])) {
@@ -30,17 +30,21 @@ if (!isset($_SESSION['logedin'])) {
         $product_desc = $_POST['product_description'];  
         
         
+      
+            foreach($_FILES['new_image']['tmp_name'] as $key=>$val){
+                $filename = $_FILES['new_image']['name'][$key];
+                $tempname = $_FILES['new_image']['tmp_name'][$key];
+                $folder = "../assets/img/product_images/".$_FILES['new_image']['name'][$key];
+                echo $filename , $tempname;
+                if(!empty($filename ) && !empty($tempname)){
+                $q_image = "INSERT INTO `products_images`( `product_name`, `category_name`, `image_path`, `image_name`) VALUES
+                                                        ('$product_name','$product_category','assest/img/product_images/','$filename')";  
+                mysqli_query($conn, $q_image);     
+                
+                move_uploaded_file($tempname, $folder);
+                }
+            } 
         
-        foreach($_FILES['new_image']['tmp_name'] as $key=>$val){
-            $filename = $_FILES['new_image']['name'][$key];
-            $tempname = $_FILES['new_image']['tmp_name'][$key];
-            $folder = "../assets/img/product_images/".$_FILES['new_image']['name'][$key];
-            $q_image = "INSERT INTO `products_images`( `product_name`, `category_name`, `image_path`, `image_name`) VALUES
-                                                     ('$product_name','$product_category','assest/img/product_images/','$filename')";  
-            mysqli_query($conn, $q_image);     
-            
-            move_uploaded_file($tempname, $folder);
-        }          
 
         // echo $update_id,$update_name,$update_slug,$update_status,$update_time,$update_user_id;
         $update_query = " UPDATE `products_tables` SET  `product_name`='$product_name',`product_slug`='$product_slug',`category`='$product_category',`product_price`='$product_price',`product_price_discount`='$product_price_discount',`product_weight`='$product_weight',`product_height`='$product_height',`quantity`='$product_quantity',`description`='$product_desc'WHERE `product_id`='$product_id'";

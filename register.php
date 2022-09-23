@@ -47,11 +47,27 @@ if (isset($_SESSION['logedin'])) {
         } else {
             $pass2 = $_POST['pass2'];
         }
+       
 
 
         //  checks ==>
 
+        // phone check  
 
+        if (!preg_match ("/^[0-9]*$/", $phone) ){  
+            $errphone = "Only numeric value is allowed.";  
+            
+        }elseif(!preg_match ("/^[+]?[1-9][0-9]{9,12}$/", $phone) ){
+            $errphone = "enter valid phone number ";  
+
+        }
+
+        // email check 
+       
+if (!preg_match ( "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^", $email) ){  
+    $erremail= "Email is not valid.";  
+} 
+    
 
         // email check that alreardy in db or not 
         $emailindb = false;
@@ -66,22 +82,24 @@ if (isset($_SESSION['logedin'])) {
         // password check
 
         if ($pass1 != $pass2) {
+            
             $errmsg = "your password does not match !!! please check !";
         } 
-        elseif (empty($fname) or empty($pass1) or empty($email) or empty($dob) or empty($phone)) {
-
-            $errmsg = "please fill all requied entry..!";
-        }
+    
          elseif ($emailindb) {
             $errmsg = "allready have an account with this email. use another email account ..! ";
         } else {
+            if (empty($errfname) && empty($errpass1) && empty($erremail) && empty($errdob) && empty($errphone) && empty($errpass1) && empty($errpass2)) {
+
+       
             $pass = md5($pass1);
             
             $query =
                 "INSERT INTO `users` (`first_name`, `last_name`, `email`, `dob`, `phone`, `password`) VALUES ('$fname', '$lname', '$email', '$dob', '$phone', '$pass')";
             mysqli_query($conn, $query);
-            $_SESSION['crud_msg'] = "your account has been created successfully ...!! login to countinue...";
+            $_SESSION['crud_msg'] = "login to countinue..";
             header("location:login.php");
+            }
         }
     }
 
@@ -100,17 +118,7 @@ if (isset($_SESSION['logedin'])) {
     </head>
 
     <body class="bg-gradient-primary">
-        <?php if ($errmsg) {
-            echo '
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>message: </strong> ' . $errmsg . '
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>';
-    //   echo '<meta http-equiv="refresh" content="0.5;url=login.php">';
-        }
-        ?>
+      
         <div class="container">
             <div class="card shadow-lg o-hidden border-0 my-5">
                 <div class="card-body p-0">
@@ -123,6 +131,17 @@ if (isset($_SESSION['logedin'])) {
                                 <div class="text-center">
                                     <h4 class="text-dark mb-4">Create an Account!</h4>
                                 </div>
+                                <?php if ($errmsg) {
+            echo '
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>message: </strong> ' . $errmsg . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
+    //   echo '<meta http-equiv="refresh" content="0.5;url=login.php">';
+        }
+        ?>
                                 <form class="user" action="register.php" method="POST">
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="fname" placeholder="First Name" name="fname" value="<?php echo $fname ?>"><span class="error">

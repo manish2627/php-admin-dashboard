@@ -1,10 +1,11 @@
 <?php
 session_start();
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
 
-    include '../db.config.php';
+  
 
     //Get catgory details
     $result = mysqli_query($conn, "select * from category_table");
@@ -20,11 +21,53 @@ if (!isset($_SESSION['logedin'])) {
         $category_data[] = $data;
     }
 
-    $product_q = mysqli_query($conn, "SELECT * FROM products_tables");
+    $product_query = "SELECT * FROM products_tables";
+  
+    $filters = array_filter($_GET);
+    // echo"<pre>";
+    // print_r($filters);
+
+    if (count($filters)) {
+        $product_query .= " WHERE"; 
+       
+        
+        // // if price fillter is use 
+        // if(isset($filters['min_price']) && isset($filters['max_price']) ){
+            
+                $product_query .= " `product_price` BETWEEN ".$filters['min_price']." AND ".$filters['max_price']." ";
+                unset($filters['min_price']) ;
+                unset($filters['max_price']) ;
+    
+        // }
+
+
+        $i = 0;
+       
+        foreach ($filters as $key => $value) {
+            if (count($filters) > $i) { 
+                $product_query .= " &&";
+            }
+            
+            $product_query .= " $key = '$value'";  
+            $i++;
+           
+           
+        }
+    }
+    
+    $product_query .= " ORDER BY `products_tables`.`created_on` ";
+
+    $product_q = mysqli_query($conn, $product_query);
     $products = [];
     while ($product = mysqli_fetch_assoc($product_q)) {
         $products[] =  $product;
     }
+    $category_data = [];
+    $result = mysqli_query($conn, "select * from category_table");
+    while ($data =  mysqli_fetch_assoc($result)) {
+        $category_data[] = $data;
+    }
+
 
 
 ?>
@@ -36,6 +79,9 @@ if (!isset($_SESSION['logedin'])) {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
         <title>All products </title>
+        <link rel="stylesheet" href="/path/to/jquery-ui.css">
+<script src="/path/to/jquery.min.js"></script>
+<script src="/path/to/jquery-ui.min.js"></script>
     </head>
 
     <body id="page-top">
@@ -51,7 +97,7 @@ if (!isset($_SESSION['logedin'])) {
 
             <div class="container-fluid">
                 <?php
-                if ($_SESSION['crud_msg']) {
+                if (isset($_SESSION['crud_msg']) && !empty($_SESSION['crud_msg'])){
                     echo '
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
@@ -70,7 +116,7 @@ if (!isset($_SESSION['logedin'])) {
 
 
                     <!-- product search form start here -->
-                    <form action="product_search.php" >
+                    <form action="">
                         <div class="row mx-2">
                             <div class=" col-md-3">
 
@@ -79,18 +125,45 @@ if (!isset($_SESSION['logedin'])) {
                             <div class="col-md-3">
                                 <select class="form-select" name="category" aria-label="Default select example" style="width:100% ;">
                                     <option value=""> All category </option>
-                                    <?php foreach($category_data as $category){ ?>
-                                    <option ><?= $category['category_name']?></option>
-                                    <?php }?>                                   
+                                    <?php foreach ($category_data as $category) { ?>
+                                        <option><?= $category['category_name'] ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
-                           
+                            <div class="col-md-3 row">
+                                <div class="col-md-6">
+                                <select class="form-select" name="min_price" aria-label="Default select example" style="width:100% ;">
+                                    <option selected value="01">MInimum Price  </option>
+
+                                    <option value="5"> 5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+
+
+                                </select>
+                                </div>
+                                <div class="col-md-6">
+                                <select class="form-select" name="max_price" aria-label="Default select example" style="width:100% ;">
+                                    <option selected value="100">MAx Price </option>
+
+                                    
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="20">30</option>
+
+
+                                </select>
+                                </div>
+                            </div>
+
                             <div class="col-md-3">
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </div>
                         </div>
                     </form>
-                            <!-- product search form ends here -->
+                    <!-- product search form ends here -->
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                         <table class="table my-0" id="dataTable">
@@ -114,7 +187,9 @@ if (!isset($_SESSION['logedin'])) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 0;
+                                <?php
+                                
+                                $i = 0;
                                 foreach ($products as $product) {
                                     $i += 1 ?>
                                     <tr>

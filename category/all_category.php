@@ -1,10 +1,11 @@
 <?php
 session_start();
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
     $aleart_msg = [];
-    include '../db.config.php';
+   
 
        //Get catgory details
     $result = mysqli_query($conn, "select * from category_table");
@@ -38,7 +39,7 @@ if (!isset($_SESSION['logedin'])) {
 
                         <div class="container-fluid">
                         <?php
-       if($_SESSION['crud_msg']) {
+       if(isset($_SESSION['crud_msg'])&& !empty($_SESSION['crud_msg'])) {
             echo '
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
@@ -81,8 +82,8 @@ if (!isset($_SESSION['logedin'])) {
                                                     <td class="counterCell"><?= $i ?></td>
                                                     <td><?php echo $data['category_name']; ?></td>
                                                     <td><?php echo $data['category_slug']; ?></td>
-                                                    <td><?php echo $data['created_on']; ?></td>
-                                                    <td><?php echo $data['updated_on']; ?></td>
+                                                    <td><?php $date = date_create($data['created_on']); echo date_format($date,"d/m/Y"); ?></td>
+                                                    <td><?php $date = date_create($data['updated_on']); echo date_format($date,"d/m/Y ");  ?></td>
                                                     <td><?php echo $data['created_by']; ?></td>
                                                     
                                                     <td><?php if ($data['status'] == 1) {

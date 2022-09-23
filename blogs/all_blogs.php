@@ -40,7 +40,7 @@ if (!isset($_SESSION['logedin'])) {
 
                         <div class="container-fluid">
                         <?php
-       if($_SESSION['crud_msg']) {
+       if(isset($_SESSION['crud_msg']) && !empty($_SESSION['crud_msg'])) {
             echo '
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
@@ -80,7 +80,7 @@ if (!isset($_SESSION['logedin'])) {
 
                                                     <td class="counterCell"><?= $i ?></td>
                                                     <td><?php echo $blog['blog_title']; ?></td>
-                                                    <td><?php echo substr($blog['blog_description'] , 0,30).".."; ?></td>
+                                                    <td><?php echo strip_tags(substr($blog['blog_description'] , 0,70)).".."; ?></td>
                                                     <td><?php echo $blog['created_by']; ?></td>
                                                     <td><?php echo $blog['created_on']; ?></td>
                                                     <td>

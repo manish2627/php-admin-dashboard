@@ -1,8 +1,8 @@
 <?php
 session_start();
 include '../db.config.php';
-if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+if (!isset($_SESSION['username'])) {
+    header("location:".APP_URL."/login.php");
 } else {
     //add new catagory 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,6 +18,7 @@ if (!isset($_SESSION['logedin'])) {
                 } else {
                     $cat_slug = $_GET['cat_slug'];
                 }
+           
                 include 'db.config.php';
                 $add_query = "INSERT INTO `category_table` ( `category_name`, `category_slug`,`created_by`) VALUES ('$cat_name','$cat_slug','$user_name')";
                 mysqli_query($conn, $add_query);

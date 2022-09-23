@@ -2,7 +2,7 @@
 session_start();
 include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
     // check edit request 
     // if (!isset($_GET['cat_update'])) {
@@ -28,7 +28,7 @@ if (!isset($_SESSION['logedin'])) {
                 // echo $update_id,$update_name,$update_slug,$update_status,$update_time,$update_user_id;
                 $update_query = " UPDATE `category_table` SET `category_name`='$update_name',`category_slug`='$update_slug',`status`='$update_status',`updated_on`=CURRENT_TIMESTAMP() WHERE id = '$update_id'";
                 mysqli_query($conn, $update_query);
-                $_SESSION['crud_msg'] = "your category has been updated...!!";
+                $_SESSION['msg'] = "your category has been updated...!!";
                 header("location:".APP_URL."/category/all_category.php");
             
         }

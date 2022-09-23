@@ -2,7 +2,7 @@
 session_start();
 include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("../location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
 
 
@@ -55,7 +55,7 @@ if (!isset($_SESSION['logedin'])) {
 
         <div class="container-fluid">
             <?php
-            if ($_SESSION['crud_msg']) {
+            if (isset($_SESSION['crud_msg']) && !empty($_SESSION['crud_msg'])) {
                 echo '
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <strong>message: </strong> ' . $_SESSION['crud_msg'] . '

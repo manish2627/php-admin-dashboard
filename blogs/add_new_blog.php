@@ -2,7 +2,7 @@
 session_start();
 include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
     //add new catagory 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -1,10 +1,11 @@
 <?php
 session_start();
+include '../db.config.php';
 if (!isset($_SESSION['logedin'])) {
-    header("location:login.php");
+    header("location:".APP_URL."/login.php");
 } else {
 
-    include '../db.config.php';
+   
 
 
 
@@ -39,7 +40,7 @@ if (!isset($_SESSION['logedin'])) {
 
             <div class="container-fluid">
                 <?php
-                if ($_SESSION['crud_msg']) {
+                if (isset($_SESSION['crud_msg']) && !empty($session['crud_msg'])) {
                     echo '
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>message: </strong> ' . $_SESSION['crud_msg'] . '
@@ -52,9 +53,7 @@ if (!isset($_SESSION['logedin'])) {
 
                 ?>
                 <div class="card shadow">
-                    <div class="card-header py-3">
-                        <p class="text-primary m-0 font-weight-bold">Orders</p>
-                    </div>
+                    
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                         <table class="table my-0" id="dataTable">
@@ -65,8 +64,8 @@ if (!isset($_SESSION['logedin'])) {
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
-                                    <th scope="col">Job Role</th>
-                                    <th scope="col">Join Date</th>
+                                    <!-- <th scope="col">Role</th> -->
+                                    <th scope="col">Created on</th>
 
                                     <th scope="col">Action</th>
                                 </tr>
@@ -81,18 +80,14 @@ if (!isset($_SESSION['logedin'])) {
                                         <td><?php echo $user['first_name'] . " " . $user['last_name']; ?></td>
                                         <td><?php echo $user['email']; ?></td>
                                         <td><?php echo $user['phone']; ?></td>
-                                        <td><?php echo $user['role']; ?></td>
+                                        <!-- <td><?php  ?></td> -->
 
 
                                         <td><?php $date = date_create($user['join_date']);
-                                            echo date_format($date, DATE_COOKIE); ?></td>
+                                            echo date_format($date,"d/m/Y"); ?></td>
 
-                                        <td><?php $q =mysqli_query($conn,"SELECT `role` FROM `users` WHERE `user_id`=".$_SESSION['user_id']);
-                                                $user_role = mysqli_fetch_assoc($q);
-                                                
-                                                
-
-                                                    if($user_role['role'] == 'admin'){ ;?>
+                                        <td>
+                                    
                                             <div class="row">
                                                 <!-- Button trigger modal for update form-->
                                                 <form id="form" action="update_user.php" method="GET">
@@ -101,12 +96,7 @@ if (!isset($_SESSION['logedin'])) {
                                                     <button type="submit" class="btn-sm btn-primary "> edit</button>
                                                 </form>
                                             </div>
-                                            <?php }
-                                            else{echo '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
-                                                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
-                                              </svg>'; 
-                                              
-                                            }?>
+                                          
                                         </td>
 
 
